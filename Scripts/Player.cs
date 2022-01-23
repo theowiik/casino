@@ -50,7 +50,14 @@ public sealed class Player : KinematicBody
             _state = State.Sitting;
             var chairPos = chair.GetGlobalSitPosition();
             GlobalTransform = new Transform(Quat.Identity, chairPos);
+        } else if (result is Button button) {
+            button.Press();
         }
+    }
+
+    private void ExitChair()
+    {
+        _state = State.Walking;
     }
 
     public override void _UnhandledInput(InputEvent @event)
@@ -70,6 +77,10 @@ public sealed class Player : KinematicBody
 
         if (@event.IsActionPressed("interact")) {
             Interact();
+        }
+
+        if (@event.IsActionReleased("exit")) {
+            ExitChair();
         }
     }
 }
