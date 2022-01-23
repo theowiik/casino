@@ -2,10 +2,16 @@ using Godot;
 
 public sealed class Player : KinematicBody
 {
+    private enum State {
+        Walking,
+        Sitting
+    }
+
     private const float _speed = 10f;
     private const float _mouseSensitivity = 0.005f;
     private Spatial _cameraPivot;
     private RayCast _interactRay;
+    private State _state = State.Walking;
 
     public override void _Ready()
     {
@@ -15,7 +21,9 @@ public sealed class Player : KinematicBody
 
     public override void _Process(float delta)
     {
-        Move();
+        if (_state == State.Walking) {
+            Move();
+        }
     }
 
     private void Move()
@@ -35,7 +43,14 @@ public sealed class Player : KinematicBody
 
     private void Interact()
     {
-        GD.Print(_interactRay.IsColliding());
+        GD.Print("Interact");
+        var result = _interactRay.GetCollider();
+
+        if (result is Chair chair) {
+            _state = State.Sitting;
+            var chairPos = chair.GetGlobalSitPosition();
+            GlobalTransform = new Transform(Quat.Identity, chairPos);
+        }
     }
 
     public override void _UnhandledInput(InputEvent @event)

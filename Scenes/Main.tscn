@@ -71,3 +71,6 @@ material = SubResource( 4 )
 [node name="CollisionShape" type="CollisionShape" parent="BlackJack/Table"]
 transform = Transform( 4.50546, 0, 0, 0, 0.23005, 0, 0, 0, 2.44185, 0, 0, 0 )
 shape = SubResource( 5 )
+
+[node name="Chair" parent="." instance=ExtResource( 5 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -8.90581, 1.56386, -4.12724 )
