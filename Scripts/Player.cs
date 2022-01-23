@@ -13,14 +13,22 @@ public sealed class Player : KinematicBody
 
     public override void _Process(float delta)
     {
+        Move();
+    }
+
+    private void Move()
+    {
         var dir = Vector3.Zero;
+        var basis = GlobalTransform.basis;
+        var z = basis.z;
+        var x = basis.x;
 
-        if (Input.IsActionPressed("forward")) dir.z += 1;
-        if (Input.IsActionPressed("back")) dir.z += -1;
-        if (Input.IsActionPressed("right")) dir.x += 1;
-        if (Input.IsActionPressed("left")) dir.x -= 1;
+        if (Input.IsActionPressed("forward")) dir += z;
+        if (Input.IsActionPressed("back")) dir -= z;
+        if (Input.IsActionPressed("right")) dir -= x;
+        if (Input.IsActionPressed("left")) dir += x;
 
-        MoveAndSlide(dir.Normalized() * _speed, Vector3.Up);
+        MoveAndSlide(dir * _speed, Vector3.Up);
     }
 
     public override void _UnhandledInput(InputEvent @event)
