@@ -5,10 +5,12 @@ public sealed class Player : KinematicBody
     private const float _speed = 10f;
     private const float _mouseSensitivity = 0.005f;
     private Spatial _cameraPivot;
+    private RayCast _interactRay;
 
     public override void _Ready()
     {
         _cameraPivot = GetNode<Spatial>("CameraPivot");
+        _interactRay = GetNode<RayCast>("CameraPivot/Camera/InteractRay");
     }
 
     public override void _Process(float delta)
@@ -31,6 +33,11 @@ public sealed class Player : KinematicBody
         MoveAndSlide(dir * _speed, Vector3.Up);
     }
 
+    private void Interact()
+    {
+        GD.Print(_interactRay.IsColliding());
+    }
+
     public override void _UnhandledInput(InputEvent @event)
     {
         if (@event is InputEventMouseMotion e) {
@@ -44,6 +51,10 @@ public sealed class Player : KinematicBody
                 _cameraPivot.Rotation.y,
                 _cameraPivot.Rotation.z
             );
+        }
+
+        if (@event.IsActionPressed("interact")) {
+            Interact();
         }
     }
 }

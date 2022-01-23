@@ -1,0 +1,22 @@
+[gd_scene load_steps=2 format=2]
+
+[sub_resource type="CylinderShape" id=1]
+
+[node name="Chair" type="StaticBody"]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CSGCylinder" type="CSGCylinder" parent="."]
+transform = Transform( 1, 0, 0, 0, 2.42532, 0, 0, 0, 1, 0, 0, 0 )
+
+[node name="SitPosition" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.00723, 0 )
+
+[node name="CSGBox" type="CSGBox" parent="."]
+transform = Transform( 1, 0, 0, 0, 0.152771, 0, 0, 0, 1, 0, 0.816743, 0.690905 )
+width = 0.837067
+depth = 1.74019
+
+[node name="CollisionShape" type="CollisionShape" parent="."]
+transform = Transform( 1, 0, 0, 0, 2.43284, 0, 0, 0, 1, 0, 1.21194, 0 )
+shape = SubResource( 1 )
