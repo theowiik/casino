@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Scripts/Button.cs" type="Script" id=1]
 [ext_resource path="res://icon.png" type="Texture" id=2]
@@ -11,6 +11,36 @@
 albedo_texture = ExtResource( 2 )
 
 [sub_resource type="BoxShape" id=5]
+
+[sub_resource type="Animation" id=6]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("MeshInstance2:translation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 0.633 ) ]
+}
+
+[sub_resource type="Animation" id=7]
+resource_name = "press"
+tracks/0/type = "value"
+tracks/0/path = NodePath("MeshInstance2:translation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.05, 0.1 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 0.65 ), Vector3( 0, 0, 0.135393 ), Vector3( 0, 0, 0.65 ) ]
+}
 
 [node name="Button" type="StaticBody"]
 collision_layer = 6
@@ -28,3 +58,7 @@ material/0 = SubResource( 4 )
 [node name="CollisionShape" type="CollisionShape" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1.39921, 0, 0, 0.389635 )
 shape = SubResource( 5 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/RESET = SubResource( 6 )
+anims/press = SubResource( 7 )

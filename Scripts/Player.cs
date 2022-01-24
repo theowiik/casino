@@ -7,38 +7,59 @@ public sealed class Player : KinematicBody
         Sitting
     }
 
-    private const float _speed = 10f;
+    public string PlayerName { get; } = "Jeff";
+    private int _money;
+    private const float _speed = 6;
     private const float _mouseSensitivity = 0.005f;
     private Spatial _cameraPivot;
     private RayCast _interactRay;
     private State _state = State.Walking;
+    private Vector3 _velocity = Vector3.Zero;
+    private float _gravity = 30f;
+    private float _jumpForce = 50f;
 
     public override void _Ready()
     {
+        _money = 100;
         _cameraPivot = GetNode<Spatial>("CameraPivot");
         _interactRay = GetNode<RayCast>("CameraPivot/Camera/InteractRay");
     }
 
-    public override void _Process(float delta)
+    public override void _PhysicsProcess(float delta)
     {
         if (_state == State.Walking) {
-            Move();
+            Move(delta);
         }
     }
 
-    private void Move()
+    private void Move(float delta)
     {
-        var dir = Vector3.Zero;
+        // Walking
+        var desiredVelocity = GetInputVector() * _speed;
+
+        // Gravity
+        _velocity = new Vector3(desiredVelocity.x, _velocity.y - _gravity * delta, desiredVelocity.z);
+
+        // Jump
+        if (Input.IsActionJustPressed("jump") && IsOnFloor())
+            _velocity += new Vector3(0, _jumpForce, 0);
+
+        _velocity = MoveAndSlide(_velocity, Vector3.Up);
+    }
+
+    private Vector3 GetInputVector()
+    {
+        var direction = Vector3.Zero;
         var basis = GlobalTransform.basis;
         var z = basis.z;
         var x = basis.x;
 
-        if (Input.IsActionPressed("forward")) dir += z;
-        if (Input.IsActionPressed("back")) dir -= z;
-        if (Input.IsActionPressed("right")) dir -= x;
-        if (Input.IsActionPressed("left")) dir += x;
+        if (Input.IsActionPressed("forward")) direction += z;
+        if (Input.IsActionPressed("back")) direction -= z;
+        if (Input.IsActionPressed("right")) direction -= x;
+        if (Input.IsActionPressed("left")) direction += x;
 
-        MoveAndSlide(dir * _speed, Vector3.Up);
+        return direction.Normalized();
     }
 
     private void Interact()
@@ -51,7 +72,7 @@ public sealed class Player : KinematicBody
             var chairPos = chair.GetGlobalSitPosition();
             GlobalTransform = new Transform(Quat.Identity, chairPos);
         } else if (result is Button button) {
-            button.Press();
+            button.Press(this);
         }
     }
 

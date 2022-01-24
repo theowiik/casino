@@ -4,6 +4,7 @@ public sealed class Blackjack : Node
 {
     private enum BlackjackState
     {
+        TakingBets,
         PlayerTurn,
         DealerTurn,
         GameOver
@@ -14,7 +15,7 @@ public sealed class Blackjack : Node
 
     public override void _Ready()
     {
-        _state = BlackjackState.PlayerTurn;
+        _state = BlackjackState.TakingBets;
         _blackjack = new BlackjackModel();
         _blackjack.StartGame();
         DisplayScore();
