@@ -9,14 +9,14 @@ public sealed class Player : KinematicBody
 
     public string PlayerName { get; } = "Jeff";
     private int _money;
-    private const float _speed = 6;
+    private const float _speed = 15f;
     private const float _mouseSensitivity = 0.005f;
     private Spatial _cameraPivot;
     private RayCast _interactRay;
     private State _state = State.Walking;
     private Vector3 _velocity = Vector3.Zero;
     private float _gravity = 30f;
-    private float _jumpForce = 50f;
+    private float _jumpForce = 20f;
 
     public override void _Ready()
     {

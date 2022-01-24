@@ -117,6 +117,10 @@ mesh = SubResource( 9 )
 material/0 = null
 collision_layer = 4
 collision_mask = 5
+simulation_precision = 11
+linear_stiffness = 0.09
+areaAngular_stiffness = 0.12
+volume_stiffness = 0.18
 
 [node name="Floor" type="StaticBody" parent="."]
 collision_layer = 4
