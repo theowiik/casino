@@ -8,5 +8,6 @@ public sealed class Button : Node
     public void Press()
     {
         GD.Print("Button pressed");
+        EmitSignal(nameof(ButtonPressed));
     }
 }

@@ -1,64 +1,76 @@
 using Godot;
-using System.Collections.Generic;
 
 public sealed class Blackjack : Node
 {
-    private enum Suit {
-        Clubs,
-        Diamonds,
-        Hearts,
-        Spades
-    }
-
-    private struct Card
+    private enum BlackjackState
     {
-        public int Value;
-        public string Name;
-        public Suit Suit;
+        PlayerTurn,
+        DealerTurn,
+        GameOver
+    }
 
-        public Card(int value, string name, Suit suit)
+    private BlackjackModel _blackjack;
+    private BlackjackState _state;
+
+    public override void _Ready()
+    {
+        _state = BlackjackState.PlayerTurn;
+        _blackjack = new BlackjackModel();
+        _blackjack.StartGame();
+        DisplayScore();
+    }
+
+    private void OnHitPressed()
+    {
+        GD.Print("Hit pressed");
+        if (_state != BlackjackState.PlayerTurn) return;
+
+        _blackjack.Hit();
+        DisplayScore();
+
+        if (_blackjack.IsPlayerBust())
         {
-            Value = value;
-            Name = name;
-            Suit = suit;
+            GD.Print("Player bust");
+            _state = BlackjackState.GameOver;
         }
     }
 
-    private IList<Card> BuildDeck() {
-        var deck = new List<Card>();
-        var suits = new Suit[] { Suit.Clubs, Suit.Diamonds, Suit.Hearts, Suit.Spades };
-        var values = new int[] { 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+    private void OnStandPressed()
+    {
+        GD.Print("Stand pressed");
+        if (_state != BlackjackState.PlayerTurn) return;
 
-        foreach (var suit in suits) {
-            foreach (var value in values) {
-                var name = $"{value} of {suit}";
-                deck.Add(new Card { Value = value, Name = name, Suit = suit });
-            }
+        _state = BlackjackState.DealerTurn;
+        _blackjack.Stand();
+
+        DisplayScore();
+
+        if (_blackjack.IsDealerBust())
+        {
+            GD.Print("Dealer bust");
+            _state = BlackjackState.GameOver;
         }
-
-        var royalties = new string[] { "Jack", "Queen", "King", "Ace" }; // TODO: Ace is 1 and 10.
-        foreach (var royalty in royalties) {
-            foreach (var suit in suits) {
-                var name = $"{royalty} of {suit}";
-                deck.Add(new Card { Value = 10, Name = name, Suit = suit });
-            }
+        else if (_blackjack.GetDealerScore() > _blackjack.GetPlayerScore())
+        {
+            GD.Print("Dealer wins");
+            _state = BlackjackState.GameOver;
         }
-
-        return deck;
+        else if (_blackjack.GetDealerScore() == _blackjack.GetPlayerScore())
+        {
+            GD.Print("Tie");
+            _state = BlackjackState.GameOver;
+        }
+        else
+        {
+            GD.Print("Player wins");
+            _state = BlackjackState.GameOver;
+        }
     }
 
-    private IList<Card> BuildShuffledDeck() {
-        var deck = BuildDeck();
-        var shuffledDeck = new List<Card>();
-
-        var random = new RandomNumberGenerator();
-        while (deck.Count > 0) {
-            var index = random.RandiRange(0, deck.Count);
-            shuffledDeck.Add(deck[index]);
-            deck.RemoveAt(index);
-        }
-
-        return shuffledDeck;
+    private void DisplayScore()
+    {
+        GD.Print("------------");
+        GD.Print("Dealer score: " + _blackjack.GetDealerScore());
+        GD.Print("Player score: " + _blackjack.GetPlayerScore());
     }
 }
-
