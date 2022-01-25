@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=2]
+[gd_scene load_steps=25 format=2]
 
 [ext_resource path="res://Scripts/Player.cs" type="Script" id=1]
 [ext_resource path="res://Scripts/Main.cs" type="Script" id=2]
@@ -9,6 +9,8 @@
 [ext_resource path="res://Scripts/Blackjack.cs" type="Script" id=7]
 [ext_resource path="res://Assets/red_carpet.jpg" type="Texture" id=8]
 [ext_resource path="res://Scenes/Wall.tscn" type="PackedScene" id=9]
+[ext_resource path="res://Scripts/BallSpawner.cs" type="Script" id=10]
+[ext_resource path="res://Prefabs/Ball.tscn" type="PackedScene" id=11]
 
 [sub_resource type="BoxShape" id=12]
 
@@ -21,10 +23,11 @@ uv1_scale = Vector3( 0.6, 0.6, 0.6 )
 uv1_triplanar = true
 
 [sub_resource type="CapsuleShape" id=1]
-radius = 0.93934
-height = 2.26788
+margin = 0.001
+height = 3.0
 
-[sub_resource type="CapsuleMesh" id=2]
+[sub_resource type="CapsuleMesh" id=16]
+mid_height = 2.792
 
 [sub_resource type="SpatialMaterial" id=4]
 albedo_texture = ExtResource( 4 )
@@ -39,6 +42,12 @@ albedo_texture = ExtResource( 4 )
 albedo_texture = ExtResource( 3 )
 
 [sub_resource type="CubeMesh" id=9]
+
+[sub_resource type="CylinderMesh" id=14]
+height = 13.469
+
+[sub_resource type="CylinderShape" id=15]
+height = 13.4614
 
 [node name="Main" type="Spatial"]
 script = ExtResource( 2 )
@@ -71,22 +80,23 @@ transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 1.26907
 transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 1.26907, 7.40435, -23.164 )
 
 [node name="Player" type="KinematicBody" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.13253, 0 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.03424, 0 )
 script = ExtResource( 1 )
 
 [node name="CollisionShape" type="CollisionShape" parent="Player"]
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0 )
 shape = SubResource( 1 )
 
-[node name="Pill" type="CSGMesh" parent="Player"]
+[node name="Pill" type="MeshInstance" parent="Player"]
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0 )
-mesh = SubResource( 2 )
+mesh = SubResource( 16 )
+material/0 = null
 
 [node name="CameraPivot" type="Spatial" parent="Player"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.722847, 0.443872 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5406, 0.546706 )
 
 [node name="Camera" type="Camera" parent="Player/CameraPivot"]
-transform = Transform( -1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -7.16203e-08, 0.5009, 0.819241 )
+transform = Transform( -1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -7.16203e-08, -0.0520394, 0.643154 )
 
 [node name="InteractRay" type="RayCast" parent="Player/CameraPivot/Camera"]
 transform = Transform( 1, 3.10423e-06, -1.3569e-13, 0, -4.37114e-08, -1, 3.10423e-06, 36.5083, -1.59583e-06, -1.01445e-07, -0.448334, -1.16039 )
@@ -156,5 +166,31 @@ light_color = Color( 0.921569, 0.788235, 0.47451, 1 )
 shadow_enabled = true
 shadow_bias = 1.0
 
+[node name="BallSpawner" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 18.943, 3.22429, -18.8171 )
+script = ExtResource( 10 )
+
+[node name="Button" parent="BallSpawner" instance=ExtResource( 6 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.354771, 0, -4.36826 )
+
+[node name="Tube" type="StaticBody" parent="BallSpawner"]
+
+[node name="TubeMesh" type="MeshInstance" parent="BallSpawner/Tube"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.89434, 12.0433, -1.06695 )
+mesh = SubResource( 14 )
+skeleton = NodePath("../..")
+material/0 = null
+
+[node name="CollisionShape" type="CollisionShape" parent="BallSpawner/Tube"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.89434, 12.0433, -1.06695 )
+shape = SubResource( 15 )
+
+[node name="SpawnerPosition" type="Position3D" parent="BallSpawner/Tube"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.89434, 3.90942, -1.06695 )
+
+[node name="Ball" parent="." instance=ExtResource( 11 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4.70047, 3.63594, -17.0648 )
+
 [connection signal="ButtonPressed" from="BlackJack/Hit" to="BlackJack" method="OnHitPressed"]
 [connection signal="ButtonPressed" from="BlackJack/Stand" to="BlackJack" method="OnStandPressed"]
+[connection signal="ButtonPressed" from="BallSpawner/Button" to="BallSpawner" method="OnButtonPressed"]

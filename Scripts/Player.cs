@@ -15,7 +15,7 @@ public sealed class Player : KinematicBody
     private RayCast _interactRay;
     private State _state = State.Walking;
     private Vector3 _velocity = Vector3.Zero;
-    private float _gravity = 30f;
+    private float _gravity = 50f;
     private float _jumpForce = 20f;
 
     public override void _Ready()
@@ -64,7 +64,6 @@ public sealed class Player : KinematicBody
 
     private void Interact()
     {
-        GD.Print("Interact");
         var result = _interactRay.GetCollider();
 
         if (result is Chair chair) {
