@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=2]
+[gd_scene load_steps=27 format=2]
 
 [ext_resource path="res://Scripts/Player.cs" type="Script" id=1]
 [ext_resource path="res://Scripts/Main.cs" type="Script" id=2]
@@ -12,6 +12,7 @@
 [ext_resource path="res://Scripts/BallSpawner.cs" type="Script" id=10]
 [ext_resource path="res://Prefabs/Ball.tscn" type="PackedScene" id=11]
 [ext_resource path="res://Scenes/HUD.tscn" type="PackedScene" id=12]
+[ext_resource path="res://Prefabs/Pillar.tscn" type="PackedScene" id=13]
 
 [sub_resource type="BoxShape" id=12]
 
@@ -80,6 +81,12 @@ transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 1.26907
 [node name="Wall3" parent="Map" instance=ExtResource( 9 )]
 transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 1.26907, 7.40435, -23.164 )
 
+[node name="Pillar" parent="Map" instance=ExtResource( 13 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -21.7185, 4.19618, -12.4104 )
+
+[node name="MeshInstance" parent="Map/Pillar" index="0"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.33043, 3.04405, 0 )
+
 [node name="Player" type="KinematicBody" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.03424, 0 )
 script = ExtResource( 1 )
@@ -118,10 +125,10 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3.19032, -2.08515, -4.25128 )
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.71763, -2.55831, -4.29158 )
 
 [node name="Table" type="StaticBody" parent="BlackJack"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.38216, 0 )
+transform = Transform( 1.62281, 0, 0, 0, 0.154186, 0, 0, 0, 1.46692, 0.756466, -1.22558, -0.325877 )
 
 [node name="CSGBox" type="CSGBox" parent="BlackJack/Table"]
-transform = Transform( 2.62391, 0, 0, 0, 0.226693, 0, 0, 0, 2.48514, 0, 0, 0 )
+transform = Transform( -4.37114e-08, -3.82137e-15, 2.60158, -8.74228e-08, 1, 0, 1, 8.74228e-08, 1.13719e-07, 0, 0, 0 )
 width = 3.44055
 material = SubResource( 4 )
 
@@ -195,7 +202,7 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.89434, 3.90942, -1.06695 )
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4.70047, 3.63594, -17.0648 )
 
 [node name="OmniLight" type="OmniLight" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -16.8671, 2.80583, 16.859 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -16.228, 2.80583, -5.45373 )
 light_color = Color( 1, 0, 0, 1 )
 light_energy = 6.034
 shadow_enabled = true
@@ -205,3 +212,5 @@ omni_attenuation = 0.870552
 [connection signal="ButtonPressed" from="BlackJack/Hit" to="BlackJack" method="OnHitPressed"]
 [connection signal="ButtonPressed" from="BlackJack/Stand" to="BlackJack" method="OnStandPressed"]
 [connection signal="ButtonPressed" from="BallSpawner/Button" to="BallSpawner" method="OnButtonPressed"]
+
+[editable path="Map/Pillar"]

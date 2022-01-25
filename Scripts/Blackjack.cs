@@ -12,18 +12,30 @@ public sealed class Blackjack : Node
 
     private BlackjackModel _blackjack;
     private BlackjackState _state;
+    private Button _hitButton;
+    private Button _standButton;
 
     public override void _Ready()
     {
+        _hitButton = GetNode<Button>("Hit");
+        _standButton = GetNode<Button>("Stand");
+
+        _hitButton.Clickable = false;
+        _standButton.Clickable = false;
+
         _state = BlackjackState.TakingBets;
         _blackjack = new BlackjackModel();
-        _blackjack.StartGame();
         DisplayScore();
     }
 
     private void Join(Player player, int bet)
     {
+        player.TakeMoney(bet);
 
+        _blackjack.StartGame();
+        _hitButton.Clickable = true;
+        _standButton.Clickable = true;
+        _state = BlackjackState.PlayerTurn;
     }
 
     private void OnHitPressed()

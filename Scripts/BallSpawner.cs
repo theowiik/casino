@@ -13,11 +13,14 @@ public sealed class BallSpawner : Node
 
     private void OnButtonPressed()
     {
-        var ball = _ballScene.Instance<Spatial>();
+        for (int i = 0; i < 10; i++)
+        {
+            var ball = _ballScene.Instance<Spatial>();
 
-        // TODO: Spawn as child to root node
-        AddChild(ball);
-        var globalSpawnPos = _spawnerPosition.GlobalTransform.origin;
-        ball.GlobalTransform = new Transform(Quat.Identity, globalSpawnPos);
+            // TODO: Spawn as child to root node
+            AddChild(ball);
+            var globalSpawnPos = _spawnerPosition.GlobalTransform.origin;
+            ball.GlobalTransform = new Transform(Quat.Identity, globalSpawnPos);
+        }
     }
 }

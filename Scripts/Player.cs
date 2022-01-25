@@ -25,6 +25,15 @@ public sealed class Player : KinematicBody
         _interactRay = GetNode<RayCast>("CameraPivot/Camera/InteractRay");
     }
 
+    public int TakeMoney(int amount) {
+        // TODO: Make money threadsafe
+        if (amount <= 0) return 0;
+        if (_money < amount) throw new System.Exception("Not enough money");
+
+        _money -= amount;
+        return amount;
+    }
+
     public override void _PhysicsProcess(float delta)
     {
         if (_state == State.Walking) {

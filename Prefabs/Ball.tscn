@@ -1,8 +1,11 @@
 [gd_scene load_steps=3 format=2]
 
 [sub_resource type="SphereMesh" id=1]
+radius = 0.25
+height = 0.5
 
 [sub_resource type="SphereShape" id=2]
+radius = 0.25001
 
 [node name="Ball" type="RigidBody"]
 collision_layer = 4
