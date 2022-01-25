@@ -194,6 +194,14 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.89434, 3.90942, -1.06695 )
 [node name="Ball" parent="." instance=ExtResource( 11 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4.70047, 3.63594, -17.0648 )
 
+[node name="OmniLight" type="OmniLight" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -16.8671, 2.80583, 16.859 )
+light_color = Color( 1, 0, 0, 1 )
+light_energy = 6.034
+shadow_enabled = true
+omni_range = 9.684
+omni_attenuation = 0.870552
+
 [connection signal="ButtonPressed" from="BlackJack/Hit" to="BlackJack" method="OnHitPressed"]
 [connection signal="ButtonPressed" from="BlackJack/Stand" to="BlackJack" method="OnStandPressed"]
 [connection signal="ButtonPressed" from="BallSpawner/Button" to="BallSpawner" method="OnButtonPressed"]

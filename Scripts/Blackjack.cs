@@ -21,6 +21,11 @@ public sealed class Blackjack : Node
         DisplayScore();
     }
 
+    private void Join(Player player, int bet)
+    {
+
+    }
+
     private void OnHitPressed()
     {
         GD.Print("Hit pressed");
