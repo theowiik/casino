@@ -14,10 +14,16 @@ config/name="casino"
 run/main_scene="res://Scenes/Main.tscn"
 config/icon="res://icon.png"
 
+[display]
+
+window/size/width=1920
+window/size/height=1080
+
 [global]
 
 editor=false
 external=false
+resolution=false
 
 [input]
 
