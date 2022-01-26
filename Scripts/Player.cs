@@ -2,7 +2,8 @@ using Godot;
 
 public sealed class Player : KinematicBody
 {
-    private enum State {
+    private enum State
+    {
         Walking,
         Sitting
     }
@@ -25,7 +26,8 @@ public sealed class Player : KinematicBody
         _interactRay = GetNode<RayCast>("CameraPivot/Camera/InteractRay");
     }
 
-    public int TakeMoney(int amount) {
+    public int TakeMoney(int amount)
+    {
         // TODO: Make money threadsafe
         if (amount <= 0) return 0;
         if (_money < amount) throw new System.Exception("Not enough money");
@@ -36,7 +38,8 @@ public sealed class Player : KinematicBody
 
     public override void _PhysicsProcess(float delta)
     {
-        if (_state == State.Walking) {
+        if (_state == State.Walking)
+        {
             Move(delta);
         }
     }
@@ -75,12 +78,19 @@ public sealed class Player : KinematicBody
     {
         var result = _interactRay.GetCollider();
 
-        if (result is Chair chair) {
-            _state = State.Sitting;
-            var chairPos = chair.GetGlobalSitPosition();
-            GlobalTransform = new Transform(Quat.Identity, chairPos);
-        } else if (result is Button button) {
-            button.Press(this);
+        switch (result)
+        {
+            case Chair chair:
+                _state = State.Sitting;
+                var chairPos = chair.GetGlobalSitPosition();
+                GlobalTransform = new Transform(Quat.Identity, chairPos);
+                break;
+            case PlayerBetButton betButton:
+                betButton.Press(this, 10);
+                break;
+            case Button button:
+                button.Press();
+                break;
         }
     }
 
@@ -91,24 +101,27 @@ public sealed class Player : KinematicBody
 
     public override void _UnhandledInput(InputEvent @event)
     {
-        if (@event is InputEventMouseMotion e) {
+        if (@event is InputEventMouseMotion e)
+        {
             // Todo: does not take into account delta time.
             RotateY(-e.Relative.x * _mouseSensitivity);
             _cameraPivot.RotateX(e.Relative.y * _mouseSensitivity);
 
             _cameraPivot.Rotation = new Vector3(
-                
+
                 Mathf.Clamp(_cameraPivot.Rotation.x, -1.2f, 1.2f),
                 _cameraPivot.Rotation.y,
                 _cameraPivot.Rotation.z
             );
         }
 
-        if (@event.IsActionPressed("interact")) {
+        if (@event.IsActionPressed("interact"))
+        {
             Interact();
         }
 
-        if (@event.IsActionReleased("exit")) {
+        if (@event.IsActionReleased("exit"))
+        {
             ExitChair();
         }
     }

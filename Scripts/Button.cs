@@ -1,6 +1,6 @@
 using Godot;
 
-public sealed class Button : Node
+public class Button : Node
 {
     [Signal]
     public delegate void ButtonPressed();
@@ -30,15 +30,17 @@ public sealed class Button : Node
         Clickable = true;
     }
 
-    private void AnimateButton()
+    protected void AnimateButton()
     {
         _animationPlayer.Stop();
         _animationPlayer.Play("press");
     }
 
-    public void Press(Player who)
+    public void Press()
     {
-        GD.Print("Button pressed by " + who.PlayerName);
+        if (!Clickable) return;
+
+        GD.Print("ordinary button pressed");
         AnimateButton();
         EmitSignal(nameof(ButtonPressed));
     }
