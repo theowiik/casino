@@ -33,6 +33,7 @@ public sealed class Blackjack : Node
 
     private void OnPlayerJoin(Player player, int bet)
     {
+        _playerJoinButton.Clickable = false;
         player.TakeMoney(bet);
 
         _blackjack.StartGame();
