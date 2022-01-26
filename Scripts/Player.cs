@@ -2,14 +2,17 @@ using Godot;
 
 public sealed class Player : KinematicBody
 {
+    [Signal]
+    public delegate void MoneyChanged(int money);
+
     private enum State
     {
         Walking,
         Sitting
     }
 
-    public string PlayerName { get; } = "Jeff";
     private int _money;
+    public string PlayerName { get; } = "Jeff";
     private const float _speed = 15f;
     private const float _mouseSensitivity = 0.005f;
     private Spatial _cameraPivot;
@@ -18,21 +21,39 @@ public sealed class Player : KinematicBody
     private Vector3 _velocity = Vector3.Zero;
     private float _gravity = 50f;
     private float _jumpForce = 20f;
+    private HUD _hud;
+
+    private int Money
+    {
+        get
+        {
+            return _money;
+        }
+        set
+        {
+            _money = value;
+            EmitSignal(nameof(MoneyChanged), _money);
+        }
+    }
 
     public override void _Ready()
     {
-        _money = 100;
         _cameraPivot = GetNode<Spatial>("CameraPivot");
         _interactRay = GetNode<RayCast>("CameraPivot/Camera/InteractRay");
+        _hud = GetNode<HUD>("HUD");
+
+        this.Connect(nameof(MoneyChanged), _hud, nameof(HUD.OnMoneyChanged));
+
+        Money = 100;
     }
 
     public int TakeMoney(int amount)
     {
         // TODO: Make money threadsafe
         if (amount <= 0) return 0;
-        if (_money < amount) throw new System.Exception("Not enough money");
+        if (Money < amount) throw new System.Exception("Not enough money");
 
-        _money -= amount;
+        Money -= amount;
         return amount;
     }
 

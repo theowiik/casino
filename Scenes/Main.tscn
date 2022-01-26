@@ -154,7 +154,7 @@ transform = Transform( 0.498767, 0, 0, 0, 0.189345, 4.8448e-09, 0, 4.84478e-09, 
 mesh = SubResource( 7 )
 material/0 = SubResource( 8 )
 
-[node name="PlayerBetButton" parent="BlackJack" instance=ExtResource( 14 )]
+[node name="PlayerJoinButton" parent="BlackJack" instance=ExtResource( 14 )]
 transform = Transform( -0.742644, 0.133007, -0.656345, -0.0310686, 0.97218, 0.232163, 0.668965, 0.192807, -0.717852, 4.49133, -0.209948, -0.957994 )
 
 [node name="Chair" parent="." instance=ExtResource( 5 )]

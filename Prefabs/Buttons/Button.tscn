@@ -46,7 +46,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ Vector3( 0, 0, 0.65 ) ]
+"values": [ Vector3( 0, 0, 0.1 ) ]
 }
 
 [sub_resource type="Animation" id=9]
@@ -76,7 +76,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0, 0.05, 0.1 ),
 "transitions": PoolRealArray( 1, 1, 1 ),
 "update": 0,
-"values": [ Vector3( 0, 0, 0.65 ), Vector3( 0, 0, 0.135393 ), Vector3( 0, 0, 0.65 ) ]
+"values": [ Vector3( 0, 0, 0.1 ), Vector3( 0, 0, 0.025 ), Vector3( 0, 0, 0.1 ) ]
 }
 
 [node name="Button" type="StaticBody"]
@@ -88,7 +88,7 @@ mesh = SubResource( 2 )
 material/0 = SubResource( 10 )
 
 [node name="ButtonPress" type="MeshInstance" parent="."]
-transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 2.08091e-08, 0.156942 )
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 1.11898e-08, 0.377007 )
 mesh = SubResource( 3 )
 material/0 = SubResource( 11 )
 
