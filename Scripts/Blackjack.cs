@@ -15,6 +15,8 @@ public sealed class Blackjack : Node
     private Button _hitButton;
     private Button _standButton;
     private PlayerBetButton _playerJoinButton;
+    private Player _who;
+    private int _bet;
 
     public override void _Ready()
     {
@@ -23,24 +25,27 @@ public sealed class Blackjack : Node
         _playerJoinButton = GetNode<PlayerBetButton>("PlayerJoinButton");
         _playerJoinButton.Connect(nameof(PlayerBetButton.PlayerPressed), this, nameof(OnPlayerJoin));
 
-        _hitButton.Clickable = false;
-        _standButton.Clickable = false;
-
         _state = BlackjackState.TakingBets;
         _blackjack = new BlackjackModel();
+
+        Reset();
         DisplayScore();
     }
 
     private void OnPlayerJoin(Player player, int bet)
     {
-        _playerJoinButton.Clickable = false;
+        if (player is null || bet <= 0) return;
+
+        _who = player;
+        _bet = bet;
+
         player.TakeMoney(bet);
 
         _blackjack.StartGame();
         DisplayScore();
-        _hitButton.Clickable = true;
-        _standButton.Clickable = true;
         _state = BlackjackState.PlayerTurn;
+
+        SetButtonClickable(_state);
     }
 
     private void OnHitPressed()
@@ -54,7 +59,7 @@ public sealed class Blackjack : Node
         if (_blackjack.IsPlayerBust())
         {
             GD.Print("Player bust");
-            _state = BlackjackState.GameOver;
+            Reset();
         }
     }
 
@@ -68,25 +73,59 @@ public sealed class Blackjack : Node
 
         DisplayScore();
 
-        if (_blackjack.IsDealerBust())
+        if (_blackjack.IsDealerBust() && _blackjack.IsPlayerBust())
         {
-            GD.Print("Dealer bust");
-            _state = BlackjackState.GameOver;
+            GD.Print("Both bust");
+            Reset();
         }
         else if (_blackjack.GetDealerScore() > _blackjack.GetPlayerScore())
         {
             GD.Print("Dealer wins");
-            _state = BlackjackState.GameOver;
+            Reset();
         }
         else if (_blackjack.GetDealerScore() == _blackjack.GetPlayerScore())
         {
-            GD.Print("Tie");
-            _state = BlackjackState.GameOver;
+            GD.Print("Tie, what happens here");
+            Reset();
         }
         else
         {
             GD.Print("Player wins");
-            _state = BlackjackState.GameOver;
+            _who.GiveMoney(_bet);
+            Reset();
+        }
+    }
+
+    private void Reset()
+    {
+        _state = BlackjackState.TakingBets;
+        SetButtonClickable(_state);
+    }
+
+    private void SetButtonClickable(BlackjackState state)
+    {
+        switch (state)
+        {
+            case BlackjackState.TakingBets:
+                _playerJoinButton.Clickable = true;
+                _hitButton.Clickable = false;
+                _standButton.Clickable = false;
+                break;
+            case BlackjackState.PlayerTurn:
+                _playerJoinButton.Clickable = false;
+                _hitButton.Clickable = true;
+                _standButton.Clickable = true;
+                break;
+            case BlackjackState.DealerTurn:
+                _playerJoinButton.Clickable = false;
+                _hitButton.Clickable = false;
+                _standButton.Clickable = false;
+                break;
+            case BlackjackState.GameOver:
+                _playerJoinButton.Clickable = true;
+                _hitButton.Clickable = false;
+                _standButton.Clickable = false;
+                break;
         }
     }
 

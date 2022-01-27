@@ -57,6 +57,12 @@ public sealed class Player : KinematicBody
         return amount;
     }
 
+    public void GiveMoney(int amount)
+    {
+        if (amount <= 0) return;
+        Money += amount;
+    }
+
     public override void _PhysicsProcess(float delta)
     {
         if (_state == State.Walking)

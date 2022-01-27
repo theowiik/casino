@@ -14,6 +14,11 @@ public sealed class Main : Node
 
     public override void _PhysicsProcess(float delta)
     {
+        // Hold();
+    }
+
+    private void Hold()
+    {
         var desiredPos = _playerCamera.GlobalTransform.origin - _playerCamera.GlobalTransform.basis.z * 5;
         var currentPos = _pickup.GlobalTransform.origin;
 
