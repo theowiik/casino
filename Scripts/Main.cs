@@ -4,6 +4,8 @@ public sealed class Main : Node
 {
     private Camera _playerCamera;
     private RigidBody _pickup;
+    private float _timer;
+    private const float _forceTime = 0.01f;
 
     public override void _Ready()
     {
@@ -12,9 +14,20 @@ public sealed class Main : Node
         Input.SetMouseMode(Input.MouseMode.Captured);
     }
 
+    public override void _Process(float delta)
+    {
+        _timer += delta;
+
+        if (_timer > _forceTime)
+        {
+            _timer = 0f;
+            GD.Print("Force");
+            Hold();
+        }
+    }
+
     public override void _PhysicsProcess(float delta)
     {
-        // Hold();
     }
 
     private void Hold()
@@ -22,7 +35,7 @@ public sealed class Main : Node
         var desiredPos = _playerCamera.GlobalTransform.origin - _playerCamera.GlobalTransform.basis.z * 5;
         var currentPos = _pickup.GlobalTransform.origin;
 
-        _pickup.ApplyCentralImpulse(desiredPos - currentPos);
+        _pickup.ApplyCentralImpulse((desiredPos - currentPos) * 2f * 0.1f);
     }
 
     public override void _UnhandledInput(InputEvent @event)

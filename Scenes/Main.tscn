@@ -173,6 +173,13 @@ material/0 = SubResource( 8 )
 [node name="PlayerJoinButton" parent="BlackJack" instance=ExtResource( 14 )]
 transform = Transform( -0.742644, 0.133007, -0.656345, -0.0310686, 0.97218, 0.232163, 0.668965, 0.192807, -0.717852, 4.49133, -0.209948, -0.957994 )
 
+[node name="Light" type="OmniLight" parent="BlackJack"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.26181, 2.89415, -1.36837 )
+light_color = Color( 0.952941, 0.737255, 0.403922, 1 )
+light_energy = 1.426
+light_specular = 0.547
+omni_range = 13.714
+
 [node name="Chair" parent="." instance=ExtResource( 5 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -8.90581, 1.56386, -4.12724 )
 
