@@ -40,7 +40,6 @@ public class Button : Node
     {
         if (!Clickable) return;
 
-        GD.Print("ordinary button pressed");
         AnimateButton();
         EmitSignal(nameof(ButtonPressed));
     }

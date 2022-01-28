@@ -50,17 +50,12 @@ public sealed class Blackjack : Node
 
     private void OnHitPressed()
     {
-        GD.Print("Hit pressed");
         if (_state != BlackjackState.PlayerTurn) return;
 
         _blackjack.Hit();
         DisplayScore();
 
-        if (_blackjack.IsPlayerBust())
-        {
-            GD.Print("Player bust");
-            Reset();
-        }
+        if (_blackjack.IsPlayerBust()) Reset();
     }
 
     private void OnStandPressed()
