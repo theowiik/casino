@@ -74,6 +74,20 @@ mesh = SubResource( 10 )
 skeleton = NodePath("../../..")
 material/0 = SubResource( 13 )
 
+[node name="Floor2" type="StaticBody" parent="Map"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 15.5141, 0 )
+collision_layer = 4
+
+[node name="CollisionShape" type="CollisionShape" parent="Map/Floor2"]
+transform = Transform( 23.3229, 0, 0, 0, 1, 0, 0, 0, 23.2833, 0, -0.954048, 0 )
+shape = SubResource( 12 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Map/Floor2"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.954048, 0 )
+mesh = SubResource( 10 )
+skeleton = NodePath("../../..")
+material/0 = SubResource( 13 )
+
 [node name="Wall" parent="Map" instance=ExtResource( 9 )]
 transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -22.9896, 7.40435, 0 )
 
@@ -232,6 +246,19 @@ light_energy = 6.034
 shadow_enabled = true
 omni_range = 9.684
 omni_attenuation = 0.870552
+
+[node name="Wasd" type="Sprite3D" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.60037, 5.69378, 14.2156 )
+
+[node name="Viewport" type="Viewport" parent="Wasd"]
+size = Vector2( 100, 20 )
+usage = 0
+render_target_v_flip = true
+
+[node name="Label" type="Label" parent="Wasd/Viewport"]
+margin_right = 40.0
+margin_bottom = 14.0
+text = "gdfdsdsasda"
 
 [connection signal="ButtonPressed" from="BlackJack/Hit" to="BlackJack" method="OnHitPressed"]
 [connection signal="ButtonPressed" from="BlackJack/Stand" to="BlackJack" method="OnStandPressed"]
