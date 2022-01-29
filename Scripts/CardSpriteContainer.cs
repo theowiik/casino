@@ -1,6 +1,6 @@
 using Godot;
 
-public sealed class CardSpriteContainer : Spatial
+public sealed class CardSpriteContainer : RigidBody
 {
     public override void _Ready()
     {

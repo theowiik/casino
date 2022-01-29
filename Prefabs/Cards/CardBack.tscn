@@ -10,13 +10,16 @@ __meta__ = {
 [node name="ColorRect" type="ColorRect" parent="."]
 margin_right = 143.0
 margin_bottom = 222.0
+color = Color( 0.878431, 0.388235, 0.388235, 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Label" type="Label" parent="ColorRect"]
-margin_right = 60.0
-margin_bottom = 14.0
+margin_left = 43.0
+margin_top = 103.0
+margin_right = 103.0
+margin_bottom = 117.0
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "back side"
 __meta__ = {
