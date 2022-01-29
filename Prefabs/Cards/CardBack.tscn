@@ -7,7 +7,18 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Label" type="Label" parent="."]
-margin_right = 40.0
+[node name="ColorRect" type="ColorRect" parent="."]
+margin_right = 143.0
+margin_bottom = 222.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="ColorRect"]
+margin_right = 60.0
 margin_bottom = 14.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "back side"
+__meta__ = {
+"_edit_use_anchors_": false
+}

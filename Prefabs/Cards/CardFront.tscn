@@ -7,17 +7,9 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="ColorRect2" type="ColorRect" parent="."]
-margin_right = 253.0
-margin_bottom = 141.0
-color = Color( 0, 0.705882, 0.819608, 1 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
 [node name="ColorRect" type="ColorRect" parent="."]
-margin_right = 94.0
-margin_bottom = 250.0
+margin_right = 143.0
+margin_bottom = 222.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
