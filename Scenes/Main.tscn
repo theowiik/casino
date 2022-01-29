@@ -14,7 +14,7 @@
 [ext_resource path="res://Scenes/HUD.tscn" type="PackedScene" id=12]
 [ext_resource path="res://Prefabs/Pillar.tscn" type="PackedScene" id=13]
 [ext_resource path="res://Prefabs/Buttons/PlayerBetButton.tscn" type="PackedScene" id=14]
-[ext_resource path="res://Prefabs/Cards/CardSpriteContainer.tscn" type="PackedScene" id=15]
+[ext_resource path="res://Prefabs/Cards/CardFan.tscn" type="PackedScene" id=16]
 
 [sub_resource type="BoxShape" id=12]
 
@@ -248,8 +248,8 @@ shadow_enabled = true
 omni_range = 9.684
 omni_attenuation = 0.870552
 
-[node name="CardSpriteContainer" parent="." instance=ExtResource( 15 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.43245, 4.66686, 14.711 )
+[node name="CardFan" parent="." instance=ExtResource( 16 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3.65649, 3.618, 10.3813 )
 
 [connection signal="ButtonPressed" from="BlackJack/Hit" to="BlackJack" method="OnHitPressed"]
 [connection signal="ButtonPressed" from="BlackJack/Stand" to="BlackJack" method="OnStandPressed"]
