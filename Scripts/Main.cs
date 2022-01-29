@@ -13,11 +13,6 @@ public sealed class Main : Node
         
         _pickup = GetNode<RigidBody>("Holding");
         _playerCamera = GetNode<Camera>("Player/CameraPivot/Camera");
-
-        // Label demo
-        var viewport = GetNode<Viewport>("Wasd/Viewport");
-        var sprite3d = GetNode<Sprite3D>("Wasd");
-        sprite3d.Texture = viewport.GetTexture();
     }
 
     public override void _Process(float delta)
@@ -49,11 +44,5 @@ public sealed class Main : Node
         {
             GetTree().Quit();
         }
-    }
-
-    private Camera GetCameraViewport()
-    {
-        var camera = GetNode<Camera>("Player/CameraPivot/Camera");
-        return camera.GetViewport().GetCamera();
     }
 }

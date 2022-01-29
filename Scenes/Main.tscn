@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=2]
+[gd_scene load_steps=31 format=2]
 
 [ext_resource path="res://Scripts/Player.cs" type="Script" id=1]
 [ext_resource path="res://Scripts/Main.cs" type="Script" id=2]
@@ -14,6 +14,7 @@
 [ext_resource path="res://Scenes/HUD.tscn" type="PackedScene" id=12]
 [ext_resource path="res://Prefabs/Pillar.tscn" type="PackedScene" id=13]
 [ext_resource path="res://Prefabs/Buttons/PlayerBetButton.tscn" type="PackedScene" id=14]
+[ext_resource path="res://Prefabs/Cards/CardSpriteContainer.tscn" type="PackedScene" id=15]
 
 [sub_resource type="BoxShape" id=12]
 
@@ -101,10 +102,10 @@ transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 1.26907
 transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 1.26907, 7.40435, -23.164 )
 
 [node name="Pillar" parent="Map" instance=ExtResource( 13 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -21.7185, 4.19618, -12.4104 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -23.5696, 6.92191, -12.0063 )
 
-[node name="MeshInstance" parent="Map/Pillar" index="0"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.33043, 3.04405, 0 )
+[node name="Pillar2" parent="Map" instance=ExtResource( 13 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -23.5696, 6.92191, 10.4167 )
 
 [node name="Holding" type="RigidBody" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.03424, 5.37562 )
@@ -247,21 +248,9 @@ shadow_enabled = true
 omni_range = 9.684
 omni_attenuation = 0.870552
 
-[node name="Wasd" type="Sprite3D" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.60037, 5.69378, 14.2156 )
-
-[node name="Viewport" type="Viewport" parent="Wasd"]
-size = Vector2( 100, 20 )
-usage = 0
-render_target_v_flip = true
-
-[node name="Label" type="Label" parent="Wasd/Viewport"]
-margin_right = 40.0
-margin_bottom = 14.0
-text = "gdfdsdsasda"
+[node name="CardSpriteContainer" parent="." instance=ExtResource( 15 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.43245, 4.66686, 14.711 )
 
 [connection signal="ButtonPressed" from="BlackJack/Hit" to="BlackJack" method="OnHitPressed"]
 [connection signal="ButtonPressed" from="BlackJack/Stand" to="BlackJack" method="OnStandPressed"]
 [connection signal="ButtonPressed" from="BallSpawner/Button" to="BallSpawner" method="OnButtonPressed"]
-
-[editable path="Map/Pillar"]

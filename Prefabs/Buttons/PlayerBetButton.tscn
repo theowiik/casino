@@ -5,6 +5,3 @@
 
 [node name="PlayerBetButton" instance=ExtResource( 1 )]
 script = ExtResource( 2 )
-
-[node name="ButtonPress" parent="." index="1"]
-transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0.633 )
