@@ -41,6 +41,7 @@ mid_height = 2.792
 albedo_texture = ExtResource( 4 )
 
 [sub_resource type="BoxShape" id=5]
+extents = Vector3( 2.59926, 0.993517, 1.71954 )
 
 [sub_resource type="CapsuleMesh" id=6]
 
@@ -157,7 +158,7 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3.19032, -2.28894, -4.25128 )
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.71763, -2.265, -4.29158 )
 
 [node name="Table" type="StaticBody" parent="BlackJack"]
-transform = Transform( 1.62281, 0, 0, 0, 0.154186, 0, 0, 0, 1.46692, 0.756466, -1.22558, -0.325877 )
+transform = Transform( 1.761, 0, 0, 0, 0.112, 0, 0, 0, 1.543, 0.756466, -1.17201, -0.325877 )
 
 [node name="CSGBox" type="CSGBox" parent="BlackJack/Table"]
 transform = Transform( -4.37114e-08, -3.82137e-15, 2.60158, -8.74228e-08, 1, 0, 1, 8.74228e-08, 1.13719e-07, 0, 0, 0 )
@@ -165,7 +166,6 @@ width = 3.44055
 material = SubResource( 4 )
 
 [node name="CollisionShape" type="CollisionShape" parent="BlackJack/Table"]
-transform = Transform( 4.50546, 0, 0, 0, 0.23005, 0, 0, 0, 2.44185, 0, 0, 0 )
 shape = SubResource( 5 )
 
 [node name="Hit" parent="BlackJack" instance=ExtResource( 6 )]
@@ -249,7 +249,7 @@ omni_range = 9.684
 omni_attenuation = 0.870552
 
 [node name="CardFan" parent="." instance=ExtResource( 16 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3.65649, 3.618, 10.3813 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -9.41167, 6.11004, 13.5295 )
 
 [connection signal="ButtonPressed" from="BlackJack/Hit" to="BlackJack" method="OnHitPressed"]
 [connection signal="ButtonPressed" from="BlackJack/Stand" to="BlackJack" method="OnStandPressed"]

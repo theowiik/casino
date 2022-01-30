@@ -1,21 +1,15 @@
 using Godot;
 
-public sealed class PhysicalCard : Node
+public sealed class PhysicalCard : RigidBody
 {
     public string Text
     {
-        get
-        {
-            return _text;
-        }
         set
         {
-            _text = value;
-            _label.Text = _text;
+            _label.Text = value;
         }
     }
 
-    private string _text;
     private Label _label;
 
     public override void _Ready()
@@ -28,6 +22,17 @@ public sealed class PhysicalCard : Node
         var cardBack = GetNode<Viewport>("BackSprite3D/BackViewport");
         backSprite.Texture = cardBack.GetTexture();
 
-        _label = GetNode<Label>("ColorRect/Label");
+        // TODO: Create a model for card front
+        _label = GetNode<Label>("FrontSprite3D/FrontViewport/CardFront/ColorRect/Label");
+    }
+
+    public void SetAsStatic()
+    {
+        Mode = RigidBody.ModeEnum.Static;
+    }
+
+    public void SetAsKinematic()
+    {
+        Mode = RigidBody.ModeEnum.Kinematic;
     }
 }
