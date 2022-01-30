@@ -1,4 +1,5 @@
 using Godot;
+using System.Collections.Generic;
 
 public sealed class Blackjack : Node
 {
@@ -48,6 +49,9 @@ public sealed class Blackjack : Node
         _blackjack.StartGame();
         DisplayScore();
         _state = BlackjackState.PlayerTurn;
+
+        _playerCards.Add(_blackjack.PlayerCards);
+        _dealerCards.Add(_blackjack.DealerCards);
 
         SetButtonClickable(_state);
     }

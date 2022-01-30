@@ -36,6 +36,12 @@ public sealed class CardFan : Spatial
         }
     }
 
+    public void Add(IEnumerable<Card> cards)
+    {
+        foreach (var card in cards)
+            Add(card);
+    }
+
     public void Add(Card cardModel)
     {
         var card = _cardScene.Instance<PhysicalCard>();

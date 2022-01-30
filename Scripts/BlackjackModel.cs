@@ -2,6 +2,9 @@ using System.Collections.Generic;
 
 public sealed class BlackjackModel
 {
+    public IEnumerable<Card> PlayerCards => _playerHand;
+    public IEnumerable<Card> DealerCards => _dealerHand;
+
     private Deck _deck;
     private IList<Card> _dealerHand;
     private IList<Card> _playerHand;
