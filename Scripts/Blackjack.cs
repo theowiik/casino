@@ -17,11 +17,15 @@ public sealed class Blackjack : Node
     private PlayerBetButton _playerJoinButton;
     private Player _who;
     private int _bet;
+    private CardFan _playerCards;
+    private CardFan _dealerCards;
 
     public override void _Ready()
     {
         _hitButton = GetNode<Button>("Hit");
         _standButton = GetNode<Button>("Stand");
+        _playerCards = GetNode<CardFan>("PlayerCards");
+        _dealerCards = GetNode<CardFan>("DealerCards");
         _playerJoinButton = GetNode<PlayerBetButton>("PlayerJoinButton");
         _playerJoinButton.Connect(nameof(PlayerBetButton.PlayerPressed), this, nameof(OnPlayerJoin));
 
@@ -52,7 +56,8 @@ public sealed class Blackjack : Node
     {
         if (_state != BlackjackState.PlayerTurn) return;
 
-        _blackjack.Hit();
+        var card = _blackjack.Hit();
+        _playerCards.Add(card);
         DisplayScore();
 
         if (_blackjack.IsPlayerBust()) Reset();
@@ -93,6 +98,8 @@ public sealed class Blackjack : Node
 
     private void Reset()
     {
+        _playerCards.Clear();
+        _dealerCards.Clear();
         _state = BlackjackState.TakingBets;
         SetButtonClickable(_state);
     }

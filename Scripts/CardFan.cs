@@ -5,7 +5,9 @@ public sealed class CardFan : Spatial
 {
     private IList<PhysicalCard> _cards;
     private PackedScene _cardScene;
-    private const float Radius = 3f;
+    private const float Radius = 1f;
+    private const float PercentageOfCircle = 0.5f;
+    private const float ZOffset = 0.1f;
 
     public override void _Ready()
     {
@@ -13,7 +15,7 @@ public sealed class CardFan : Spatial
         _cards = new List<PhysicalCard>();
 
         for (int i = 0; i < 10; i++)
-            DevCreateCard();
+            Add(new Card(21, "test card", Suit.Clubs));
 
         Place();
     }
@@ -21,28 +23,55 @@ public sealed class CardFan : Spatial
     private void Place()
     {
         var i = 0;
-        var baseVector = new Vector3(0, Radius, 0);
-        var angleBetweenCardsRad = Mathf.Tau / _cards.Count;
+        var basis = Transform.basis;
+        var angleBetweenCardsRad = PercentageOfCircle * Mathf.Tau / _cards.Count;
+        var totalRad = angleBetweenCardsRad * _cards.Count;
+        var baseVector = basis.y.Normalized() * Radius;
 
         foreach (var card in _cards)
         {
-            var rotated = baseVector.Rotated(Vector3.Forward, i * angleBetweenCardsRad);
-            card.Transform = new Transform(Transform.basis, rotated);
-
-            card.RotateZ(-i * angleBetweenCardsRad);
-            // var x = card.Rotation.Rotated(Vector3.Forward, i * angleBetweenCardsRad);
-            // card.Rotation = x;
-
-            // GD.Print(x);
+            var forward = basis.z.Normalized();
+            var rotated = baseVector.Rotated(forward, i * angleBetweenCardsRad);
+            card.Transform = new Transform(basis, rotated + basis.z.Normalized() * ZOffset);
+            //card.RotateZ(-i * angleBetweenCardsRad);
             i++;
         }
     }
 
-    private void DevCreateCard()
+    public void Add(Card card)
+    {
+        BuildAndAdd(card);
+        Place();
+    }
+
+    public void Clear()
+    {
+        foreach (var card in _cards)
+            card.QueueFree();
+
+        _cards.Clear();
+    }
+
+    public override void _PhysicsProcess(float delta)
+    {
+        RotateY(delta * Mathf.Tau / 10);
+
+        if (Input.IsActionJustPressed("ui_right"))
+        {
+            Clear();
+            for (int i = 0; i < 1; i++)
+            {
+                Add(new Card(21, "test card", Suit.Clubs));
+            }
+        }
+    }
+
+    private void BuildAndAdd(Card cardModel)
     {
         var card = _cardScene.Instance<PhysicalCard>();
         card.SetAsStatic();
         AddChild(card);
+        card.Text = cardModel.Name;
         _cards.Add(card);
     }
 }

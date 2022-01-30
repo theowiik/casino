@@ -25,9 +25,14 @@ public sealed class BlackjackModel
         _playerHand.Add(_deck.TakeTopCard());
     }
 
-    public void Hit()
+    /// <summary>
+    ///     Adds a card from the deck to the player's hand. Returns the card that was added.
+    /// </summary>
+    public Card Hit()
     {
-        _playerHand.Add(_deck.TakeTopCard());
+        var card = _deck.TakeTopCard();
+        _playerHand.Add(card);
+        return card;
     }
 
     public void Stand()
