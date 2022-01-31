@@ -44,3 +44,4 @@ material/0 = null
 shape = SubResource( 2 )
 
 [node name="Spatial" parent="." instance=ExtResource( 4 )]
+visible = false

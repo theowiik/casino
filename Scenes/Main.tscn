@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=2]
+[gd_scene load_steps=31 format=2]
 
 [ext_resource path="res://Scripts/Player.cs" type="Script" id=1]
 [ext_resource path="res://Scripts/Main.cs" type="Script" id=2]
@@ -14,6 +14,7 @@
 [ext_resource path="res://Scenes/HUD.tscn" type="PackedScene" id=12]
 [ext_resource path="res://Prefabs/Pillar.tscn" type="PackedScene" id=13]
 [ext_resource path="res://Prefabs/Buttons/PlayerBetButton.tscn" type="PackedScene" id=14]
+[ext_resource path="res://Prefabs/Jukebox.tscn" type="PackedScene" id=15]
 [ext_resource path="res://Prefabs/Cards/CardFan.tscn" type="PackedScene" id=16]
 
 [sub_resource type="BoxShape" id=12]
@@ -243,6 +244,9 @@ omni_attenuation = 0.870552
 
 [node name="CardFan" parent="." instance=ExtResource( 16 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -9.41167, 6.11004, 13.5295 )
+
+[node name="Jukebox" parent="." instance=ExtResource( 15 )]
+transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 12.6726, 2.75025, 22.2102 )
 
 [connection signal="ButtonPressed" from="BlackJack/Hit" to="BlackJack" method="OnHitPressed"]
 [connection signal="ButtonPressed" from="BlackJack/Stand" to="BlackJack" method="OnStandPressed"]

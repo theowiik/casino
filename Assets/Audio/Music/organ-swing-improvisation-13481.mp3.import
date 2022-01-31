@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/organ-swing-improvisation-13481.mp3-aff08dfe17ef3885418e451d432aec48.mp3str"
+
+[deps]
+
+source_file="res://Assets/Audio/Music/organ-swing-improvisation-13481.mp3"
+dest_files=[ "res://.import/organ-swing-improvisation-13481.mp3-aff08dfe17ef3885418e451d432aec48.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/cool-jazz-loops-2641.mp3-94501b885db718b25c8c54bb5d60beff.mp3str"
+
+[deps]
+
+source_file="res://Assets/Audio/Music/cool-jazz-loops-2641.mp3"
+dest_files=[ "res://.import/cool-jazz-loops-2641.mp3-94501b885db718b25c8c54bb5d60beff.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0
