@@ -24,7 +24,7 @@ public sealed class CardFan : Spatial
 
         if (Input.IsActionJustPressed("ui_right"))
         {
-            Place();
+            Add(new Card(21, "during dev", Suit.Clubs));
         }
     }
 
@@ -39,7 +39,7 @@ public sealed class CardFan : Spatial
         foreach (var card in _cards)
         {
             var zBasis = card.Transform.basis.z.Normalized();
-            var angle = i * angleBetweenCardsRad;
+            var angle = i * angleBetweenCardsRad + angleBetweenCardsRad / 2 - Mathf.Pi / 2;
             card.Rotation = Vector3.Zero;
 
             card.SetPosition(baseVector.Rotated(zBasis, angle) + new Vector3(0, 0, i * ZOffset));
