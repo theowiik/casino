@@ -1,7 +1,8 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://Scripts/Jukebox.cs" type="Script" id=1]
 [ext_resource path="res://Assets/Audio/Music/cool-jazz-loops-2641.mp3" type="AudioStream" id=2]
+[ext_resource path="res://Prefabs/Buttons/Button.tscn" type="PackedScene" id=3]
 
 [sub_resource type="CubeMesh" id=1]
 size = Vector3( 3.144, 5.46, 2 )
@@ -20,9 +21,11 @@ size = Vector3( 2, 1.317, 2 )
 albedo_color = Color( 0.152941, 0.152941, 0.152941, 1 )
 
 [sub_resource type="BoxShape" id=4]
-extents = Vector3( 1.71321, 3.31811, 1.15202 )
+extents = Vector3( 1.71321, 3.31811, 0.925776 )
 
 [node name="Jukebox" type="StaticBody"]
+collision_layer = 6
+collision_mask = 5
 script = ExtResource( 1 )
 
 [node name="MeshInstance" type="MeshInstance" parent="."]
@@ -40,11 +43,14 @@ mesh = SubResource( 3 )
 material/0 = SubResource( 6 )
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.963584, 0.0940647 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.963584, 0.0444236 )
 shape = SubResource( 4 )
 
 [node name="MusicPlayer" type="AudioStreamPlayer3D" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2.98198 )
 stream = ExtResource( 2 )
-autoplay = true
-max_distance = 269.94
+unit_size = 10.0
+max_distance = 387.3
+
+[node name="NextButton" parent="." instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.620279, 0, 1.11006 )

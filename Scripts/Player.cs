@@ -118,6 +118,9 @@ public sealed class Player : KinematicBody
             case Button button:
                 button.Press();
                 break;
+            case Jukebox jukebox:
+                jukebox.PlayPause();
+                break;
         }
     }
 
