@@ -6,7 +6,7 @@ public sealed class CardFan : Spatial
     private IList<PhysicalCard> _cards;
     private PackedScene _cardScene;
     private const float Radius = 3f;
-    private const float PercentageOfCircle = 1f;
+    private const float PercentageOfCircle = 0.5f;
     private const float ZOffset = 0.1f;
 
     public override void _Ready()
@@ -38,10 +38,12 @@ public sealed class CardFan : Spatial
 
         foreach (var card in _cards)
         {
-            // Reset
+            var zBasis = card.Transform.basis.z.Normalized();
+            var angle = i * angleBetweenCardsRad;
             card.Rotation = Vector3.Zero;
-            card.SetPosition(baseVector.Rotated(card.Transform.basis.z.Normalized(), i * angleBetweenCardsRad));
-            card.Rotate(card.Transform.basis.z.Normalized(), i * angleBetweenCardsRad);
+
+            card.SetPosition(baseVector.Rotated(zBasis, angle) + new Vector3(0, 0, i * ZOffset));
+            card.Rotate(zBasis, angle);
 
             i++;
         }
