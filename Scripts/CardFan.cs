@@ -6,7 +6,8 @@ public sealed class CardFan : Spatial
     private IList<PhysicalCard> _cards;
     private PackedScene _cardScene;
     private const float Radius = 3f;
-    private const float PercentageOfCircle = 0.5f;
+    private const float DesiredAngleBetweenCardsRad = Mathf.Pi / 10f;
+    private const float MaxPercentageOfCircle = 0.5f;
     private const float ZOffset = 0.1f;
 
     public override void _Ready()
@@ -18,28 +19,23 @@ public sealed class CardFan : Spatial
             Add(new Card(21, "test card", Suit.Clubs));
     }
 
-    public override void _PhysicsProcess(float delta)
-    {
-        Rotate(Vector3.Up, delta * Mathf.Pi / 2);
-
-        if (Input.IsActionJustPressed("ui_right"))
-        {
-            Add(new Card(21, "during dev", Suit.Clubs));
-        }
-    }
-
     private void Place()
     {
         var i = 0;
-        var angleBetweenCardsRad = PercentageOfCircle * Mathf.Tau / _cards.Count;
+        float angleBetweenCardsRad;
+
+        if (WillOverlap())
+            angleBetweenCardsRad = MaxPercentageOfCircle * Mathf.Tau / _cards.Count;
+        else
+            angleBetweenCardsRad = DesiredAngleBetweenCardsRad;
+
         var totalRad = angleBetweenCardsRad * _cards.Count;
         var baseVector = new Vector3(0, Radius, 0);
-        var center = Transform.origin;
 
         foreach (var card in _cards)
         {
             var zBasis = card.Transform.basis.z.Normalized();
-            var angle = i * angleBetweenCardsRad + angleBetweenCardsRad / 2 - Mathf.Pi / 2;
+            var angle = i * angleBetweenCardsRad + angleBetweenCardsRad / 2 - totalRad / 2;
             card.Rotation = Vector3.Zero;
 
             card.SetLocalPosition(baseVector.Rotated(zBasis, angle) + new Vector3(0, 0, i * ZOffset));
@@ -47,6 +43,17 @@ public sealed class CardFan : Spatial
 
             i++;
         }
+    }
+
+    private bool WillOverlap()
+    {
+        return DesiredAngleBetweenCardsRad * _cards.Count > Mathf.Tau * MaxPercentageOfCircle;
+    }
+
+    public override void _PhysicsProcess(float delta)
+    {
+        if (Input.IsActionJustPressed("ui_down"))
+            Add(new Card(21, "test card", Suit.Clubs));
     }
 
     public void Add(IEnumerable<Card> cards)

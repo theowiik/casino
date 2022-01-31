@@ -44,7 +44,7 @@ public class Button : Node, IInteractable
         EmitSignal(nameof(ButtonPressed));
     }
 
-    public void Interact(Player interactedBy)
+    public virtual void Interact(Player interactedBy)
     {
         Press();
     }

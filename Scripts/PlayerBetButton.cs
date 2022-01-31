@@ -5,7 +5,7 @@ public sealed class PlayerBetButton : Button, IInteractable
     [Signal]
     public delegate void PlayerPressed(Player who, float amount);
 
-    public void Interact(Player interactedBy)
+    public override void Interact(Player interactedBy)
     {
         Press(interactedBy, 10);
     }
