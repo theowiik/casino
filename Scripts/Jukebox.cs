@@ -2,7 +2,7 @@ using Godot;
 using System.Collections.Generic;
 using System.Linq;
 
-public sealed class Jukebox : Node
+public sealed class Jukebox : Node, IInteractable
 {
     private AudioStreamPlayer3D _musicPlayer;
     private float _resumeTime;
@@ -37,7 +37,7 @@ public sealed class Jukebox : Node
         _resumeTime = 0f;
     }
 
-    public void PlayPause()
+    private void PlayPause()
     {
         if (_musicPlayer.Stream == null)
         {
@@ -56,5 +56,8 @@ public sealed class Jukebox : Node
         }
     }
 
-
+    public void Interact(Player interactedBy)
+    {
+        PlayPause();
+    }
 }

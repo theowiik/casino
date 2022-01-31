@@ -42,7 +42,7 @@ public sealed class CardFan : Spatial
             var angle = i * angleBetweenCardsRad + angleBetweenCardsRad / 2 - Mathf.Pi / 2;
             card.Rotation = Vector3.Zero;
 
-            card.SetPosition(baseVector.Rotated(zBasis, angle) + new Vector3(0, 0, i * ZOffset));
+            card.SetLocalPosition(baseVector.Rotated(zBasis, angle) + new Vector3(0, 0, i * ZOffset));
             card.Rotate(zBasis, angle);
 
             i++;

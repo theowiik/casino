@@ -1,6 +1,6 @@
 using Godot;
 
-public class Button : Node
+public class Button : Node, IInteractable
 {
     [Signal]
     public delegate void ButtonPressed();
@@ -36,11 +36,16 @@ public class Button : Node
         _animationPlayer.Play("press");
     }
 
-    public void Press()
+    private void Press()
     {
         if (!Clickable) return;
 
         AnimateButton();
         EmitSignal(nameof(ButtonPressed));
+    }
+
+    public void Interact(Player interactedBy)
+    {
+        Press();
     }
 }

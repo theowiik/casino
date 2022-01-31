@@ -5,23 +5,24 @@ public sealed class Player : KinematicBody
     [Signal]
     public delegate void MoneyChanged(int money);
 
-    private enum State
+    public enum PlayerState
     {
         Walking,
         Sitting
     }
 
+    public PlayerState State { get; set; }
+
     private int _money;
     public string PlayerName { get; } = "Jeff";
-    private const float _speed = 15f;
-    private const float _mouseSensitivity = 0.005f;
     private Spatial _cameraPivot;
     private RayCast _interactRay;
-    private State _state = State.Walking;
-    private Vector3 _velocity = Vector3.Zero;
-    private float _gravity = 50f;
-    private float _jumpForce = 20f;
     private HUD _hud;
+    private Vector3 _velocity = Vector3.Zero;
+    private const float speed = 15f;
+    private const float MouseSensitivity = 0.005f;
+    private const float Gravity = 50f;
+    private const float JumpForce = 20f;
 
     private int Money
     {
@@ -38,6 +39,7 @@ public sealed class Player : KinematicBody
 
     public override void _Ready()
     {
+        State = PlayerState.Walking;
         _cameraPivot = GetNode<Spatial>("CameraPivot");
         _interactRay = GetNode<RayCast>("CameraPivot/Camera/InteractRay");
         _hud = GetNode<HUD>("HUD");
@@ -65,7 +67,7 @@ public sealed class Player : KinematicBody
 
     public override void _PhysicsProcess(float delta)
     {
-        if (_state == State.Walking)
+        if (State == PlayerState.Walking)
         {
             Move(delta);
         }
@@ -74,14 +76,14 @@ public sealed class Player : KinematicBody
     private void Move(float delta)
     {
         // Walking
-        var desiredVelocity = GetInputVector() * _speed;
+        var desiredVelocity = GetInputVector() * speed;
 
         // Gravity
-        _velocity = new Vector3(desiredVelocity.x, _velocity.y - _gravity * delta, desiredVelocity.z);
+        _velocity = new Vector3(desiredVelocity.x, _velocity.y - Gravity * delta, desiredVelocity.z);
 
         // Jump
         if (Input.IsActionJustPressed("jump") && IsOnFloor())
-            _velocity += new Vector3(0, _jumpForce, 0);
+            _velocity += new Vector3(0, JumpForce, 0);
 
         _velocity = MoveAndSlide(_velocity, Vector3.Up);
     }
@@ -105,28 +107,13 @@ public sealed class Player : KinematicBody
     {
         var result = _interactRay.GetCollider();
 
-        switch (result)
-        {
-            case Chair chair:
-                _state = State.Sitting;
-                var chairPos = chair.GetGlobalSitPosition();
-                GlobalTransform = new Transform(Quat.Identity, chairPos);
-                break;
-            case PlayerBetButton betButton:
-                betButton.Press(this, 10);
-                break;
-            case Button button:
-                button.Press();
-                break;
-            case Jukebox jukebox:
-                jukebox.PlayPause();
-                break;
-        }
+        if (result is IInteractable interactable)
+            interactable.Interact(this);
     }
 
     private void ExitChair()
     {
-        _state = State.Walking;
+        State = PlayerState.Walking;
     }
 
     public override void _UnhandledInput(InputEvent @event)
@@ -134,8 +121,8 @@ public sealed class Player : KinematicBody
         if (@event is InputEventMouseMotion e)
         {
             // Todo: does not take into account delta time.
-            RotateY(-e.Relative.x * _mouseSensitivity);
-            _cameraPivot.RotateX(e.Relative.y * _mouseSensitivity);
+            RotateY(-e.Relative.x * MouseSensitivity);
+            _cameraPivot.RotateX(e.Relative.y * MouseSensitivity);
 
             _cameraPivot.Rotation = new Vector3(
 
