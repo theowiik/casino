@@ -11,7 +11,8 @@ public sealed class Jukebox : Node
 
     public override void _Ready()
     {
-        _musicFiles = FileUtil.GetAllFiles("res://Assets/Audio/Music", new[] { "wav", "mp3" }).ToList();
+        _musicFiles = FileUtil.GetAllFiles("res://Assets/Audio/Music", new[] { "wav", "mp3" }).ToList().Shuffle();
+
         _musicPlayer = GetNode<AudioStreamPlayer3D>("MusicPlayer");
         var nextButton = GetNode<Button>("NextButton");
         nextButton.Connect(nameof(Button.ButtonPressed), this, nameof(OnNextPressed));
@@ -38,6 +39,12 @@ public sealed class Jukebox : Node
 
     public void PlayPause()
     {
+        if (_musicPlayer.Stream == null)
+        {
+            Play(_currentMusicIndex);
+            return;
+        }
+
         if (_musicPlayer.Playing)
         {
             _resumeTime = _musicPlayer.GetPlaybackPosition();
