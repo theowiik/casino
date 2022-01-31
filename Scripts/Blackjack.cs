@@ -95,7 +95,7 @@ public sealed class Blackjack : Node
         else
         {
             GD.Print("Player wins");
-            _who.GiveMoney(_bet);
+            _who.GiveMoney(_bet * 2);
             Reset();
         }
     }

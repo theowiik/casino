@@ -6,7 +6,7 @@ public sealed class CardFan : Spatial
     private IList<PhysicalCard> _cards;
     private PackedScene _cardScene;
     private const float Radius = 3f;
-    private const float PercentageOfCircle = 0.5f;
+    private const float PercentageOfCircle = 1f;
     private const float ZOffset = 0.1f;
 
     public override void _Ready()
@@ -16,8 +16,16 @@ public sealed class CardFan : Spatial
 
         for (int i = 0; i < 10; i++)
             Add(new Card(21, "test card", Suit.Clubs));
+    }
 
-        Place();
+    public override void _PhysicsProcess(float delta)
+    {
+        Rotate(Vector3.Up, delta * Mathf.Pi / 2);
+
+        if (Input.IsActionJustPressed("ui_right"))
+        {
+            Place();
+        }
     }
 
     private void Place()
@@ -26,12 +34,15 @@ public sealed class CardFan : Spatial
         var angleBetweenCardsRad = PercentageOfCircle * Mathf.Tau / _cards.Count;
         var totalRad = angleBetweenCardsRad * _cards.Count;
         var baseVector = new Vector3(0, Radius, 0);
+        var center = Transform.origin;
 
         foreach (var card in _cards)
         {
-            var rotated = baseVector.Rotated(Vector3.Forward, i * angleBetweenCardsRad);
-            card.Transform = new Transform(card.Transform.basis, rotated + new Vector3(0, 0, ZOffset));
-            card.RotateZ(-i * angleBetweenCardsRad);
+            // Reset
+            card.Rotation = Vector3.Zero;
+            card.SetPosition(baseVector.Rotated(card.Transform.basis.z.Normalized(), i * angleBetweenCardsRad));
+            card.Rotate(card.Transform.basis.z.Normalized(), i * angleBetweenCardsRad);
+
             i++;
         }
     }
