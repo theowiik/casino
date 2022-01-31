@@ -10,7 +10,7 @@ public sealed class Main : Node
     public override void _Ready()
     {
         Input.SetMouseMode(Input.MouseMode.Captured);
-        
+
         _pickup = GetNode<RigidBody>("Holding");
         _playerCamera = GetNode<Camera>("Player/CameraPivot/Camera");
     }
