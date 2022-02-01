@@ -147,10 +147,20 @@ public sealed class Player : KinematicBody
     private void OnCollisionEnter(Node node)
     {
         GD.Print("enter");
+
+        if (node is IHoverable hoverable)
+        {
+            hoverable.HoverStarted();
+        }
     }
 
     private void OnCollisionExit(Node node)
     {
         GD.Print("exit");
+
+        if (node is IHoverable hoverable)
+        {
+            hoverable.HoverEnded();
+        }
     }
 }

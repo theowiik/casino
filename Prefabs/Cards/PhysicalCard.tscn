@@ -11,7 +11,7 @@ size = Vector3( 1.42, 2.22, 0.05 )
 extents = Vector3( 0.710388, 1.10995, 0.025 )
 
 [node name="PhysicalCard" type="RigidBody"]
-collision_layer = 4
+collision_layer = 6
 collision_mask = 5
 script = ExtResource( 1 )
 

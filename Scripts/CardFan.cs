@@ -5,7 +5,7 @@ public sealed class CardFan : Spatial
 {
     private IList<PhysicalCard> _cards;
     private PackedScene _cardScene;
-    private const float Radius = 3f;
+    private const float Radius = 1f;
     private const float DesiredAngleBetweenCardsRad = Mathf.Pi / 10f;
     private const float MaxPercentageOfCircle = 0.5f;
     private const float ZOffset = 0.1f;
@@ -65,6 +65,7 @@ public sealed class CardFan : Spatial
     public void Add(Card cardModel)
     {
         var card = _cardScene.Instance<PhysicalCard>();
+        card.Connect(nameof(PhysicalCard.BeingHovered), this, nameof(OnCardHovered));
         card.SetAsStatic();
         AddChild(card);
         card.Text = cardModel.Name;
@@ -76,8 +77,25 @@ public sealed class CardFan : Spatial
     public void Clear()
     {
         foreach (var card in _cards)
+        {
+            card.Disconnect(nameof(PhysicalCard.BeingHovered), this, nameof(OnCardHovered));
             card.QueueFree();
+        }
 
         _cards.Clear();
+    }
+
+    private void OnCardHovered(PhysicalCard card)
+    {
+        Place();
+        GD.Print("Loop for each card");
+        foreach (var c in _cards)
+            if (c == card)
+            {
+                GD.Print("This will move the card outwards a little bit");
+                c.SetLocalPosition(c.Transform.origin + new Vector3(0, 0, -0.5f));
+                GD.Print("This will exit the foreach loop");
+                break;
+            }
     }
 }

@@ -47,7 +47,6 @@ shape = SubResource( 4 )
 
 [node name="MusicPlayer" type="AudioStreamPlayer3D" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2.98198 )
-unit_size = 10.0
 max_distance = 387.3
 
 [node name="NextButton" parent="." instance=ExtResource( 3 )]

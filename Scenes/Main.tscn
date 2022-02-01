@@ -164,10 +164,10 @@ light_specular = 0.547
 omni_range = 13.714
 
 [node name="PlayerCards" parent="BlackJack" instance=ExtResource( 16 )]
-transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 3.15948, 0, -0.427963 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3.15948, -0.709498, 0.25391 )
 
 [node name="DealerCards" parent="BlackJack" instance=ExtResource( 16 )]
-transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 2.41787, 0, 0.723466 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.780634, -0.94557, 1.39417 )
 
 [node name="Chair" parent="." instance=ExtResource( 5 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -8.90581, 1.56386, -4.12724 )

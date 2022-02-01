@@ -1,7 +1,10 @@
 using Godot;
 
-public sealed class PhysicalCard : RigidBody
+public sealed class PhysicalCard : RigidBody, IHoverable
 {
+    [Signal]
+    public delegate void BeingHovered(PhysicalCard card);
+
     public string Text
     {
         set
@@ -26,13 +29,20 @@ public sealed class PhysicalCard : RigidBody
         _label = GetNode<Label>("FrontSprite3D/FrontViewport/CardFront/ColorRect/Label");
     }
 
+    public void HoverStarted()
+    {
+        EmitSignal(nameof(BeingHovered), this);
+    }
+
+    public void HoverEnded() { }
+
     public void SetAsStatic()
     {
         Mode = RigidBody.ModeEnum.Static;
     }
 
-    public void SetAsKinematic()
+    public void SetAsRigid()
     {
-        Mode = RigidBody.ModeEnum.Kinematic;
+        Mode = RigidBody.ModeEnum.Rigid;
     }
 }

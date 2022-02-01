@@ -82,6 +82,12 @@ public sealed class Blackjack : Node
             GD.Print("Both bust");
             Reset();
         }
+        else if (_blackjack.IsDealerBust() && !_blackjack.IsPlayerBust())
+        {
+            GD.Print("Dealer bust");
+            _who.GiveMoney(_bet * 2);
+            Reset();
+        }
         else if (_blackjack.GetDealerScore() > _blackjack.GetPlayerScore())
         {
             GD.Print("Dealer wins");
