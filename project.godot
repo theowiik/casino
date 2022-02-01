@@ -67,8 +67,9 @@ jump={
 [layer_names]
 
 3d_physics/layer_1="player"
-3d_physics/layer_2="interact"
+3d_physics/layer_2="interactable"
 3d_physics/layer_3="object"
+3d_physics/layer_4="player_interact_area"
 
 [physics]
 

@@ -4,19 +4,12 @@ public sealed class CubeHover : RigidBody
 {
     public override void _Ready()
     {
-        Connect("body_entered", this, nameof(OnMouseEntered));
+        var area = GetNode<Area>("Area");
+        area.Connect("area_entered", this, nameof(OnAreaEntered));
     }
 
-    public void OnMouseEntered(Node node)
+    private void OnAreaEntered(Area area)
     {
-        GD.Print("Mouse entered");
+        GD.Print("Entered area");
     }
-
-    private void _on_CubeHover_body_shape_entered(RID body_rid, object body, int body_shape_index, int local_shape_index)
-    {
-        GD.Print("test");// Replace with function body.
-    }
-
 }
-
-

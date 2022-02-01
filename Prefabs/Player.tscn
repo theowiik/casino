@@ -1,6 +1,7 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Scenes/HUD.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Scripts/RayWrapper.cs" type="Script" id=2]
 [ext_resource path="res://Scripts/Player.cs" type="Script" id=3]
 
 [sub_resource type="CapsuleShape" id=1]
@@ -23,10 +24,10 @@ mesh = SubResource( 16 )
 material/0 = null
 
 [node name="CameraPivot" type="Spatial" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5406, 0.546706 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5406, -0.660418 )
 
 [node name="Camera" type="Camera" parent="CameraPivot"]
-transform = Transform( -1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -7.16203e-08, -0.0520396, 0.643154 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -7.16203e-08, -0.0520396, -0.486754 )
 
 [node name="InteractRay" type="RayCast" parent="CameraPivot/Camera"]
 transform = Transform( 1, -1.67037e-21, -7.30144e-30, 0, -4.37114e-07, 1, -1.67037e-22, -10, -4.37114e-08, 0, 0, 0 )
@@ -34,5 +35,6 @@ enabled = true
 cast_to = Vector3( 0, 1, 0 )
 collision_mask = 2
 collide_with_areas = true
+script = ExtResource( 2 )
 
 [node name="HUD" parent="." instance=ExtResource( 1 )]

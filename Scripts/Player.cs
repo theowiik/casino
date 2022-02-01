@@ -16,7 +16,7 @@ public sealed class Player : KinematicBody
     private int _money;
     public string PlayerName { get; } = "Jeff";
     private Spatial _cameraPivot;
-    private RayCast _interactRay;
+    private RayWrapper _interactRay;
     private HUD _hud;
     private Vector3 _velocity = Vector3.Zero;
     private const float speed = 15f;
@@ -41,9 +41,11 @@ public sealed class Player : KinematicBody
     {
         State = PlayerState.Walking;
         _cameraPivot = GetNode<Spatial>("CameraPivot");
-        _interactRay = GetNode<RayCast>("CameraPivot/Camera/InteractRay");
+        _interactRay = GetNode<RayWrapper>("CameraPivot/Camera/InteractRay");
         _hud = GetNode<HUD>("HUD");
 
+        _interactRay.Connect(nameof(RayWrapper.CollisionEnter), this, nameof(OnCollisionEnter));
+        _interactRay.Connect(nameof(RayWrapper.CollisionExit), this, nameof(OnCollisionExit));
         this.Connect(nameof(MoneyChanged), _hud, nameof(HUD.OnMoneyChanged));
 
         Money = 100;
@@ -95,10 +97,10 @@ public sealed class Player : KinematicBody
         var z = basis.z;
         var x = basis.x;
 
-        if (Input.IsActionPressed("forward")) direction += z;
-        if (Input.IsActionPressed("back")) direction -= z;
-        if (Input.IsActionPressed("right")) direction -= x;
-        if (Input.IsActionPressed("left")) direction += x;
+        if (Input.IsActionPressed("forward")) direction -= z;
+        if (Input.IsActionPressed("back")) direction += z;
+        if (Input.IsActionPressed("right")) direction += x;
+        if (Input.IsActionPressed("left")) direction -= x;
 
         return direction.Normalized();
     }
@@ -122,11 +124,10 @@ public sealed class Player : KinematicBody
         {
             // Todo: does not take into account delta time.
             RotateY(-e.Relative.x * MouseSensitivity);
-            _cameraPivot.RotateX(e.Relative.y * MouseSensitivity);
+            _cameraPivot.RotateX(-e.Relative.y * MouseSensitivity);
 
             _cameraPivot.Rotation = new Vector3(
-
-                Mathf.Clamp(_cameraPivot.Rotation.x, -1.2f, 1.2f),
+                Mathf.Clamp(_cameraPivot.Rotation.x, -1.4f, 1.4f),
                 _cameraPivot.Rotation.y,
                 _cameraPivot.Rotation.z
             );
@@ -141,5 +142,15 @@ public sealed class Player : KinematicBody
         {
             ExitChair();
         }
+    }
+
+    private void OnCollisionEnter(Node node)
+    {
+        GD.Print("enter");
+    }
+
+    private void OnCollisionExit(Node node)
+    {
+        GD.Print("exit");
     }
 }
