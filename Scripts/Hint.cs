@@ -6,6 +6,13 @@ public sealed class Hint : Object
     public string Text { get; }
     public bool Show { get; }
 
+    public Hint(string text, bool show = true)
+    {
+        Key = null;
+        Text = text;
+        Show = show;
+    }
+
     public Hint(string key, string text, bool show = true)
     {
         Key = key;

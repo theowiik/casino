@@ -36,6 +36,8 @@ public sealed class HUD : Control
     {
         if (hint == null || !hint.Show)
             _hoverHintLabel.Text = "";
+        else if (string.IsNullOrWhiteSpace(hint.Key))
+            _hoverHintLabel.Text = $"{hint.Text}";
         else
             _hoverHintLabel.Text = $"{hint.Key} - {hint.Text}";
     }

@@ -1,6 +1,6 @@
 using Godot;
 
-public sealed class PhysicalCard : RigidBody, IHoverable
+public sealed class PhysicalCard : RigidBody, IHoverable, IHoverHintable
 {
     [Signal]
     public delegate void BeingHovered(PhysicalCard card);
@@ -44,5 +44,10 @@ public sealed class PhysicalCard : RigidBody, IHoverable
     public void SetAsRigid()
     {
         Mode = RigidBody.ModeEnum.Rigid;
+    }
+
+    public Hint GetHint()
+    {
+        return new Hint(_label.Text);
     }
 }
