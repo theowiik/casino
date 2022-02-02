@@ -2,7 +2,7 @@ using Godot;
 using System.Collections.Generic;
 using System.Linq;
 
-public sealed class Jukebox : Node, IInteractable
+public sealed class Jukebox : Node, IInteractable, IHoverHintable
 {
     private AudioStreamPlayer3D _musicPlayer;
     private float _resumeTime;
@@ -14,8 +14,10 @@ public sealed class Jukebox : Node, IInteractable
         _musicFiles = FileUtil.GetAllFiles("res://Assets/Audio/Music", new[] { "wav", "mp3" }).ToList().Shuffle();
 
         _musicPlayer = GetNode<AudioStreamPlayer3D>("MusicPlayer");
+
         var nextButton = GetNode<Button>("NextButton");
         nextButton.Connect(nameof(Button.ButtonPressed), this, nameof(OnNextPressed));
+        nextButton.SetHint(new Hint("E", "Next song"));
     }
 
     private void OnNextPressed()
@@ -59,5 +61,10 @@ public sealed class Jukebox : Node, IInteractable
     public void Interact(Player interactedBy)
     {
         PlayPause();
+    }
+
+    public Hint GetHint()
+    {
+        return new Hint("E", "Play/Pause");
     }
 }

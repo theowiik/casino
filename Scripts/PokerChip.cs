@@ -1,7 +1,7 @@
 using Godot;
 using casino.Scripts.Core;
 
-public sealed class PokerChip : RigidBody, IMoneyable, IInteractable
+public sealed class PokerChip : RigidBody, IMoneyable, IInteractable, IHoverHintable
 {
     private MoneyDelegate _moneyDelegate;
 
@@ -19,5 +19,10 @@ public sealed class PokerChip : RigidBody, IMoneyable, IInteractable
     {
         interactedBy.Give(TakeAll());
         QueueFree();
+    }
+
+    public Hint GetHint()
+    {
+        return new Hint("E", $"Take chip ({GetBalance()})");
     }
 }

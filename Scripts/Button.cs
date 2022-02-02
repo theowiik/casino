@@ -6,6 +6,7 @@ public class Button : Node, IInteractable, IHoverHintable
     public delegate void ButtonPressed();
     private AnimationPlayer _animationPlayer;
     private bool _clickable;
+    private Hint _hint;
 
     public bool Clickable
     {
@@ -26,6 +27,7 @@ public class Button : Node, IInteractable, IHoverHintable
 
     public override void _Ready()
     {
+        _hint = new Hint("E", "Press");
         _animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
         Clickable = true;
     }
@@ -51,6 +53,11 @@ public class Button : Node, IInteractable, IHoverHintable
 
     public Hint GetHint()
     {
-        return new Hint("E", "clicky :)");
+        return _hint;
+    }
+
+    public void SetHint(Hint hint)
+    {
+        _hint = hint;
     }
 }
