@@ -26,6 +26,7 @@ public sealed class BlackjackModel
 
         _dealerHand.Add(_deck.TakeTopCard());
         _playerHand.Add(_deck.TakeTopCard());
+        _playerHand.Add(_deck.TakeTopCard());
     }
 
     /// <summary>
@@ -46,7 +47,8 @@ public sealed class BlackjackModel
         }
     }
 
-    public int GetDealerScore() {
+    public int GetDealerScore()
+    {
         return GetScore(_dealerHand);
     }
 

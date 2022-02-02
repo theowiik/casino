@@ -12,13 +12,13 @@ public sealed class Player : KinematicBody
     }
 
     public PlayerState State { get; set; }
-
     private int _money;
     public string PlayerName { get; } = "Jeff";
     private Spatial _cameraPivot;
     private RayWrapper _interactRay;
     private HUD _hud;
     private Vector3 _velocity = Vector3.Zero;
+    private Holder _holder;
     private const float speed = 15f;
     private const float MouseSensitivity = 0.005f;
     private const float Gravity = 50f;
@@ -40,6 +40,7 @@ public sealed class Player : KinematicBody
     public override void _Ready()
     {
         State = PlayerState.Walking;
+        _holder = GetNode<Holder>("Holder");
         _cameraPivot = GetNode<Spatial>("CameraPivot");
         _interactRay = GetNode<RayWrapper>("CameraPivot/Camera/InteractRay");
         _hud = GetNode<HUD>("HUD");
@@ -107,7 +108,16 @@ public sealed class Player : KinematicBody
 
     private void Interact()
     {
-        var result = _interactRay.GetCollider();
+        var result = _interactRay.GetCollider() as Node;
+        if (result == null) return;
+
+        if (result.IsInGroup("holdable") && result is RigidBody rb)
+        {
+            GD.Print("Interact with " + rb.Name);
+            _holder.Holding = rb;
+            GD.Print("HOLDABLE");
+            return;
+        }
 
         if (result is IInteractable interactable)
             interactable.Interact(this);
@@ -131,23 +141,28 @@ public sealed class Player : KinematicBody
                 _cameraPivot.Rotation.y,
                 _cameraPivot.Rotation.z
             );
+
+            GetTree().SetInputAsHandled();
+            return;
         }
 
         if (@event.IsActionPressed("interact"))
         {
             Interact();
+            GetTree().SetInputAsHandled();
+            return;
         }
 
         if (@event.IsActionReleased("exit"))
         {
             ExitChair();
+            GetTree().SetInputAsHandled();
+            return;
         }
     }
 
     private void OnCollisionEnter(Node node)
     {
-        GD.Print("enter");
-
         if (node is IHoverable hoverable)
         {
             hoverable.HoverStarted();
@@ -156,8 +171,6 @@ public sealed class Player : KinematicBody
 
     private void OnCollisionExit(Node node)
     {
-        GD.Print("exit");
-
         if (node is IHoverable hoverable)
         {
             hoverable.HoverEnded();

@@ -5,10 +5,11 @@ public sealed class CardFan : Spatial
 {
     private IList<PhysicalCard> _cards;
     private PackedScene _cardScene;
-    private const float Radius = 1f;
-    private const float DesiredAngleBetweenCardsRad = Mathf.Pi / 10f;
-    private const float MaxPercentageOfCircle = 0.5f;
+    private const float Radius = 1.5f;
+    private const float DesiredAngleBetweenCardsRad = Mathf.Pi / 8f;
+    private const float MaxPercentageOfCircle = 0.4f;
     private const float ZOffset = 0.1f;
+    private float _hoverCardZOffset => ZOffset * 2;
 
     public override void _Ready()
     {
@@ -87,14 +88,15 @@ public sealed class CardFan : Spatial
 
     private void OnCardHovered(PhysicalCard card)
     {
+        if (_cards.Count <= 1)
+            return;
+
         Place();
-        GD.Print("Loop for each card");
+
         foreach (var c in _cards)
             if (c == card)
             {
-                GD.Print("This will move the card outwards a little bit");
-                c.SetLocalPosition(c.Transform.origin + new Vector3(0, 0, -0.5f));
-                GD.Print("This will exit the foreach loop");
+                c.SetLocalPosition(c.Transform.origin + new Vector3(0, 0, -_hoverCardZOffset));
                 break;
             }
     }
