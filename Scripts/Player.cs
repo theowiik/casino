@@ -1,6 +1,7 @@
 using Godot;
+using casino.Scripts.Core;
 
-public sealed class Player : KinematicBody
+public sealed class Player : KinematicBody, IMoneyable
 {
     [Signal]
     public delegate void MoneyChanged(int money);
@@ -12,7 +13,7 @@ public sealed class Player : KinematicBody
     }
 
     public PlayerState State { get; set; }
-    private int _money;
+    private MoneyDelegate _moneyDelegate;
     public string PlayerName { get; } = "Jeff";
     private Spatial _cameraPivot;
     private RayWrapper _interactRay;
@@ -22,19 +23,6 @@ public sealed class Player : KinematicBody
     private const float MouseSensitivity = 0.005f;
     private const float Gravity = 50f;
     private const float JumpForce = 20f;
-
-    private int Money
-    {
-        get
-        {
-            return _money;
-        }
-        set
-        {
-            _money = value;
-            EmitSignal(nameof(MoneyChanged), _money);
-        }
-    }
 
     public RayWrapper VisionWrapper => _interactRay;
 
@@ -48,23 +36,7 @@ public sealed class Player : KinematicBody
         _interactRay.Connect(nameof(RayWrapper.HoverStarted), this, nameof(OnCollisionEnter));
         _interactRay.Connect(nameof(RayWrapper.HoverEnded), this, nameof(OnCollisionExit));
 
-        Money = 100;
-    }
-
-    public int TakeMoney(int amount)
-    {
-        // TODO: Make money threadsafe
-        if (amount <= 0) return 0;
-        if (Money < amount) throw new System.Exception("Not enough money");
-
-        Money -= amount;
-        return amount;
-    }
-
-    public void GiveMoney(int amount)
-    {
-        if (amount <= 0) return;
-        Money += amount;
+        _moneyDelegate = new MoneyDelegate(100);
     }
 
     public override void _PhysicsProcess(float delta)
@@ -173,4 +145,30 @@ public sealed class Player : KinematicBody
             hoverable.HoverEnded();
         }
     }
+
+    #region Money
+
+    public int GetBalance() => _moneyDelegate.GetBalance();
+
+    public void Give(int amount)
+    {
+        _moneyDelegate.Give(amount);
+        EmitSignal(nameof(MoneyChanged), _moneyDelegate.GetBalance());
+    }
+
+    public int Take(int amount)
+    {
+        var change = _moneyDelegate.Take(amount);
+        EmitSignal(nameof(MoneyChanged), _moneyDelegate.GetBalance());
+        return change;
+    }
+
+    public int TakeAll()
+    {
+        var money = _moneyDelegate.TakeAll();
+        EmitSignal(nameof(MoneyChanged), _moneyDelegate.GetBalance());
+        return money;
+    }
+
+    #endregion
 }

@@ -20,21 +20,25 @@ public sealed class BallSpawner : Node
         {
             Spatial spatial;
 
-            if (i % 2 == 0)
+            if (false)
             {
                 spatial = _ballScene.Instance() as Spatial;
             }
             else
             {
-                var chip = _chip.Instance() as PokerChip;
-                chip.Money = 100;
-                spatial = chip;
+                spatial = _chip.Instance() as PokerChip;
             }
 
             // TODO: Spawn as child to root node
             AddChild(spatial);
             var globalSpawnPos = _spawnerPosition.GlobalTransform.origin;
             spatial.GlobalTransform = new Transform(Quat.Identity, globalSpawnPos);
+
+            if (spatial is PokerChip chip)
+            {
+                chip.Give(10);
+                spatial = chip;
+            }
         }
     }
 }

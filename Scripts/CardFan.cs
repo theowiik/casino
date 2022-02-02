@@ -8,7 +8,7 @@ public sealed class CardFan : Spatial
     private const float Radius = 1.5f;
     private const float DesiredAngleBetweenCardsRad = Mathf.Pi / 8f;
     private const float MaxPercentageOfCircle = 0.4f;
-    private const float ZOffset = 0.1f;
+    private const float ZOffset = 0.07f;
     private float _hoverCardZOffset => ZOffset * 2;
 
     public override void _Ready()

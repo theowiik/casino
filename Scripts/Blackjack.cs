@@ -43,7 +43,7 @@ public sealed class Blackjack : Node
         _who = player;
         _bet = bet;
 
-        player.TakeMoney(bet);
+        player.Take(bet);
 
         _blackjack.StartGame();
         DisplayScore();
@@ -84,7 +84,7 @@ public sealed class Blackjack : Node
         else if (_blackjack.IsDealerBust() && !_blackjack.IsPlayerBust())
         {
             GD.Print("Dealer bust");
-            _who.GiveMoney(_bet * 2);
+            _who.Give(_bet * 2);
             Reset();
         }
         else if (_blackjack.GetDealerScore() > _blackjack.GetPlayerScore())
@@ -100,7 +100,7 @@ public sealed class Blackjack : Node
         else
         {
             GD.Print("Player wins");
-            _who.GiveMoney(_bet * 2);
+            _who.Give(_bet * 2);
             Reset();
         }
     }

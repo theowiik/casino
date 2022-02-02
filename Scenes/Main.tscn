@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=2]
+[gd_scene load_steps=31 format=2]
 
 [ext_resource path="res://Prefabs/Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Scripts/Main.cs" type="Script" id=2]
@@ -17,6 +17,8 @@
 [ext_resource path="res://Prefabs/Jukebox.tscn" type="PackedScene" id=15]
 [ext_resource path="res://Prefabs/Cards/CardFan.tscn" type="PackedScene" id=16]
 [ext_resource path="res://Prefabs/CubeHover.tscn" type="PackedScene" id=17]
+[ext_resource path="res://Prefabs/Floor.tscn" type="PackedScene" id=18]
+[ext_resource path="res://Prefabs/WorldObjects/Door.tscn" type="PackedScene" id=19]
 
 [sub_resource type="BoxShape" id=12]
 
@@ -55,18 +57,7 @@ script = ExtResource( 2 )
 
 [node name="Map" type="Spatial" parent="."]
 
-[node name="Floor" type="StaticBody" parent="Map"]
-collision_layer = 4
-
-[node name="CollisionShape" type="CollisionShape" parent="Map/Floor"]
-transform = Transform( 23.3229, 0, 0, 0, 1, 0, 0, 0, 23.2833, 0, -0.954048, 0 )
-shape = SubResource( 12 )
-
-[node name="MeshInstance" type="MeshInstance" parent="Map/Floor"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.954048, 0 )
-mesh = SubResource( 10 )
-skeleton = NodePath("../../..")
-material/0 = SubResource( 13 )
+[node name="Floor" parent="Map" instance=ExtResource( 18 )]
 
 [node name="Floor2" type="StaticBody" parent="Map"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 15.5141, 0 )
@@ -86,7 +77,10 @@ material/0 = SubResource( 13 )
 transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -22.9896, 7.40435, 0 )
 
 [node name="Wall4" parent="Map" instance=ExtResource( 9 )]
-transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 23.2726, 7.40435, 0 )
+transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 23.2726, 7.40435, 30.3692 )
+
+[node name="Wall5" parent="Map" instance=ExtResource( 9 )]
+transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 23.2726, 7.40435, -26.236 )
 
 [node name="Wall2" parent="Map" instance=ExtResource( 9 )]
 transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 1.26907, 7.40435, 23.5164 )
@@ -99,6 +93,14 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -23.5696, 6.92191, -12.0063 )
 
 [node name="Pillar2" parent="Map" instance=ExtResource( 13 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -23.5696, 6.92191, 10.4167 )
+
+[node name="Room2" type="Spatial" parent="Map"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 45.6943, 0, 0 )
+
+[node name="Floor" parent="Map/Room2" instance=ExtResource( 18 )]
+
+[node name="Door" parent="Map" instance=ExtResource( 19 )]
+transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 23.5412, 3.76989, 1.9812 )
 
 [node name="Player" parent="." instance=ExtResource( 1 )]
 transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 2.93337, 0 )
