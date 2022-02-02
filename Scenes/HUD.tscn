@@ -24,8 +24,12 @@ __meta__ = {
 }
 
 [node name="HoverHintLabel" type="Label" parent="."]
-margin_left = 49.0
-margin_top = 139.0
-margin_right = 114.0
-margin_bottom = 153.0
+margin_left = 863.0
+margin_top = 686.0
+margin_right = 928.0
+margin_bottom = 700.0
+rect_scale = Vector2( 2, 2 )
 text = "hover hint"
+__meta__ = {
+"_edit_use_anchors_": false
+}

@@ -17,6 +17,9 @@ public sealed class Main : Node
         _player.VisionWrapper.Connect(nameof(RayWrapper.HoverStarted), this, nameof(OnHoverStarted));
         _player.VisionWrapper.Connect(nameof(RayWrapper.HoverEnded), this, nameof(OnHoverEnded));
 
+        var outOfBoundsArea = GetNode<Area>("OutOfBoundsArea");
+        outOfBoundsArea.Connect("body_entered", this, nameof(OnOutOfBoundsAreaEntered));
+
         Input.SetMouseMode(Input.MouseMode.Captured);
     }
 
@@ -38,6 +41,21 @@ public sealed class Main : Node
         if (@event.IsActionPressed("ui_cancel"))
         {
             GetTree().Quit();
+        }
+    }
+
+    private void OnOutOfBoundsAreaEntered(Node node)
+    {
+        if (node is Spatial spatial)
+        {
+            spatial.SetGlobalPosition(new Vector3(0, 4, 0));
+
+            if (spatial is RigidBody rigidBody)
+            {
+                rigidBody.Mode = RigidBody.ModeEnum.Static;
+                rigidBody.LinearVelocity = Vector3.Zero;
+                rigidBody.Mode = RigidBody.ModeEnum.Rigid;
+            }
         }
     }
 }
