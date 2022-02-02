@@ -16,7 +16,6 @@ public sealed class Player : KinematicBody
     public string PlayerName { get; } = "Jeff";
     private Spatial _cameraPivot;
     private RayWrapper _interactRay;
-    private HUD _hud;
     private Vector3 _velocity = Vector3.Zero;
     private Holder _holder;
     private const float speed = 15f;
@@ -37,17 +36,17 @@ public sealed class Player : KinematicBody
         }
     }
 
+    public RayWrapper VisionWrapper => _interactRay;
+
     public override void _Ready()
     {
         State = PlayerState.Walking;
         _holder = GetNode<Holder>("Holder");
         _cameraPivot = GetNode<Spatial>("CameraPivot");
         _interactRay = GetNode<RayWrapper>("CameraPivot/Camera/InteractRay");
-        _hud = GetNode<HUD>("HUD");
 
-        _interactRay.Connect(nameof(RayWrapper.CollisionEnter), this, nameof(OnCollisionEnter));
-        _interactRay.Connect(nameof(RayWrapper.CollisionExit), this, nameof(OnCollisionExit));
-        this.Connect(nameof(MoneyChanged), _hud, nameof(HUD.OnMoneyChanged));
+        _interactRay.Connect(nameof(RayWrapper.HoverStarted), this, nameof(OnCollisionEnter));
+        _interactRay.Connect(nameof(RayWrapper.HoverEnded), this, nameof(OnCollisionExit));
 
         Money = 100;
     }
@@ -113,9 +112,7 @@ public sealed class Player : KinematicBody
 
         if (result.IsInGroup("holdable") && result is RigidBody rb)
         {
-            GD.Print("Interact with " + rb.Name);
             _holder.Holding = rb;
-            GD.Print("HOLDABLE");
             return;
         }
 

@@ -3,10 +3,10 @@ using Godot;
 public sealed class RayWrapper : RayCast
 {
     [Signal]
-    public delegate void CollisionEnter(Node node);
+    public delegate void HoverStarted(Node node);
 
     [Signal]
-    public delegate void CollisionExit(Node node);
+    public delegate void HoverEnded(Node node);
 
     public Object _lastCollide;
     private const float PollingRateSeconds = 0.1f;
@@ -38,16 +38,16 @@ public sealed class RayWrapper : RayCast
         // Object left AND new one entered
         if (collider != null && collider != _lastCollide)
         {
-            EmitSignal(nameof(CollisionExit), _lastCollide);
+            EmitSignal(nameof(HoverEnded), _lastCollide);
             _lastCollide = collider;
-            EmitSignal(nameof(CollisionEnter), _lastCollide);
+            EmitSignal(nameof(HoverStarted), _lastCollide);
             return;
         }
 
         // Object left
         if (collider == null && _lastCollide != null)
         {
-            EmitSignal(nameof(CollisionExit), _lastCollide);
+            EmitSignal(nameof(HoverEnded), _lastCollide);
             _lastCollide = null;
             return;
         }
@@ -55,7 +55,7 @@ public sealed class RayWrapper : RayCast
         // Object entered
         if (collider != null)
         {
-            EmitSignal(nameof(CollisionEnter), collider);
+            EmitSignal(nameof(HoverStarted), collider);
             _lastCollide = collider;
         }
 

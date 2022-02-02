@@ -22,3 +22,10 @@ uppercase = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="HoverHintLabel" type="Label" parent="."]
+margin_left = 49.0
+margin_top = 139.0
+margin_right = 114.0
+margin_bottom = 153.0
+text = "hover hint"

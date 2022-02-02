@@ -1,6 +1,6 @@
 using Godot;
 
-public class Button : Node, IInteractable
+public class Button : Node, IInteractable, IHoverHintable
 {
     [Signal]
     public delegate void ButtonPressed();
@@ -47,5 +47,10 @@ public class Button : Node, IInteractable
     public virtual void Interact(Player interactedBy)
     {
         Press();
+    }
+
+    public Hint GetHint()
+    {
+        return new Hint("E", "clicky :)");
     }
 }

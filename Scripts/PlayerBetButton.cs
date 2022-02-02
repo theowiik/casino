@@ -14,7 +14,6 @@ public sealed class PlayerBetButton : Button, IInteractable
     {
         if (!Clickable) return;
 
-        GD.Print("special button");
         AnimateButton();
         EmitSignal(nameof(PlayerPressed), who, amount);
     }
