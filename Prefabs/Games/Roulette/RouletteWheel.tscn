@@ -36,6 +36,7 @@ mode = 1
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 8.38672 )
 
 [node name="CSGCombiner" type="CSGCombiner" parent="Wheel"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0821953, -0.141766, 0.053153 )
 
 [node name="CSGMesh" type="CSGMesh" parent="Wheel/CSGCombiner"]
 mesh = SubResource( 5 )
