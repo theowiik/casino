@@ -13,6 +13,10 @@ public sealed class CardFan : Spatial
 
     public override void _Ready()
     {
+        var sprite3D = GetNode<Sprite3D>("Sprite3D");
+        var viewport = GetNode<Viewport>("Sprite3D/Viewport");
+        sprite3D.Texture = viewport.GetTexture();
+
         _cardScene = ResourceLoader.Load<PackedScene>("res://Prefabs/Cards/PhysicalCard.tscn");
         _cards = new List<PhysicalCard>();
 

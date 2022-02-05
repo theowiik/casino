@@ -53,7 +53,10 @@ public class Button : Node, IInteractable, IHoverHintable
 
     public Hint GetHint()
     {
-        return _hint;
+        if (Clickable)
+            return _hint;
+        else
+            return new Hint("Disabled");
     }
 
     public void SetHint(Hint hint)

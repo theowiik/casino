@@ -1,0 +1,53 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://Scripts/Roulette/RouletteWheel.cs" type="Script" id=2]
+[ext_resource path="res://Prefabs/Buttons/Button.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Prefabs/Games/Roulette/RouletteBall.tscn" type="PackedScene" id=4]
+
+[sub_resource type="CylinderMesh" id=1]
+bottom_radius = 0.526
+
+[sub_resource type="CylinderMesh" id=5]
+top_radius = 3.0
+bottom_radius = 3.0
+height = 1.0
+
+[sub_resource type="SpatialMaterial" id=7]
+albedo_color = Color( 0, 0, 0, 1 )
+
+[sub_resource type="CylinderMesh" id=6]
+top_radius = 2.7
+bottom_radius = 2.7
+
+[node name="RouletteWheel" type="Spatial"]
+script = ExtResource( 2 )
+
+[node name="Stand" type="MeshInstance" parent="."]
+mesh = SubResource( 1 )
+material/0 = null
+
+[node name="Wheel" type="RigidBody" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.53444, 0 )
+mode = 1
+
+[node name="CollisionPolygon" type="CollisionPolygon" parent="Wheel"]
+
+[node name="CollisionShape" type="CollisionShape" parent="Wheel"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 8.38672 )
+
+[node name="CSGCombiner" type="CSGCombiner" parent="Wheel"]
+
+[node name="CSGMesh" type="CSGMesh" parent="Wheel/CSGCombiner"]
+mesh = SubResource( 5 )
+material = SubResource( 7 )
+
+[node name="CSGMesh2" type="CSGMesh" parent="Wheel/CSGCombiner"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.712552, 0 )
+operation = 2
+mesh = SubResource( 6 )
+
+[node name="Button" parent="." instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -4.59066 )
+
+[node name="RouletteBall" parent="." instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.6829, 2.08285, 1.65962 )

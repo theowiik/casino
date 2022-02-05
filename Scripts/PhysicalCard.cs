@@ -7,6 +7,10 @@ public sealed class PhysicalCard : RigidBody, IHoverable, IHoverHintable
 
     public string Text
     {
+        get
+        {
+            return _label.Text;
+        }
         set
         {
             _label.Text = value;
@@ -48,6 +52,6 @@ public sealed class PhysicalCard : RigidBody, IHoverable, IHoverHintable
 
     public Hint GetHint()
     {
-        return new Hint(_label.Text);
+        return new Hint(Text);
     }
 }

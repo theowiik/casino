@@ -9,7 +9,7 @@ public sealed class Holder : Spatial
 
     public override void _Ready()
     {
-        Smooth = false;
+        Smooth = true;
     }
 
     public override void _Process(float delta)

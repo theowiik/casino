@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=2]
+[gd_scene load_steps=32 format=2]
 
 [ext_resource path="res://Prefabs/Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Scripts/Main.cs" type="Script" id=2]
@@ -19,6 +19,7 @@
 [ext_resource path="res://Prefabs/CubeHover.tscn" type="PackedScene" id=17]
 [ext_resource path="res://Prefabs/Floor.tscn" type="PackedScene" id=18]
 [ext_resource path="res://Prefabs/WorldObjects/Door.tscn" type="PackedScene" id=19]
+[ext_resource path="res://Prefabs/Games/Roulette/RouletteWheel.tscn" type="PackedScene" id=20]
 
 [sub_resource type="BoxShape" id=12]
 
@@ -205,7 +206,7 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -9.41167, 3.64749, 13.5295 )
 transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 12.6726, 2.75025, 22.2102 )
 
 [node name="CubeHover" parent="." instance=ExtResource( 17 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -6.10483, 3.90126, 9.2285 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -15.7241, 4.48086, 9.72446 )
 
 [node name="HUD" parent="." instance=ExtResource( 12 )]
 
@@ -216,6 +217,9 @@ collision_mask = 5
 [node name="CollisionShape" type="CollisionShape" parent="OutOfBoundsArea"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -44.206, 0 )
 shape = SubResource( 16 )
+
+[node name="RouletteWheel" parent="." instance=ExtResource( 20 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -13.973, 1.39827, -0.44191 )
 
 [connection signal="ButtonPressed" from="BlackJack/Hit" to="BlackJack" method="OnHitPressed"]
 [connection signal="ButtonPressed" from="BlackJack/Stand" to="BlackJack" method="OnStandPressed"]
